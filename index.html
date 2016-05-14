@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="chatApp">
+<head>
+	
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://apps.applozic.com https://maps.google.com https://maps.googleapis.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://apps.applozic.com 'unsafe-inline'"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/ionic.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="bootstrap.css">
+
+    <link href="applozic/css/mck-combined.min.css" rel="stylesheet">
+    <link href="applozic/css/app/mck-sidebox-1.0.css" rel="stylesheet">
+    <!-- Custom JS -->
+    <script src="applozic/js/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript">
+        var $original;
+        if (typeof jQuery !== 'undefined') {
+            $original = jQuery.noConflict(true);
+            $ = $original;
+            jQuery = $original;
+        }
+    </script>
+            <script type="text/javascript" src="applozic/js/mck-ui-plugins.min.js"></script>             
+        <script type="text/javascript" src="applozic/js/mck-ui-widget.min.js"></script>
+        <script type="text/javascript" src="applozic/js/mck-emojis.min.js"></script>    
+        <script type="text/javascript" src="applozic/js/mck-socket.min.js"></script>
+        <script type="text/javascript" src="applozic/js/locationpicker.jquery.min.js"></script>
+        <script type="text/javascript" src="applozic/js/app/mck-sidebox-1.0.js"></script>
+        <script type="text/javascript">
+            if (typeof $original !== 'undefined') {
+                $ = $original;
+                jQuery = $original;
+            } else {
+                $ = $applozic;
+                jQuery = $applozic;
+            }
+        </script>
+    <script src="lib/ionic.bundle.js"></script>
+    <script src="lib/angular-resource.js"></script>
+    <script src="lib/angular-filter.js"></script>
+    <script src="lib/angular-route.min.js"></script>
+    <script src="js/app.js"></script>
+        <script src="js/Controllers/addcontactController.js"></script>
+        <script src="js/Controllers/addgroupController.js"></script>
+        <script src="js/Controllers/chatController.js"></script>
+        <script src="js/Controllers/chatuserController.js"></script>
+        <script src="js/Controllers/contactController.js"></script>
+        <script src="js/Controllers/editgroupController.js"></script>
+        <script src="js/Controllers/groupController.js"></script>
+        <script src="js/Controllers/groupwiseuserController.js"></script>
+        <script src="js/Controllers/loginwebCtrl.js"></script>
+        <script src="js/services/chatService.js"></script>
+</head>
+<body>
+    <ion-nav-view></ion-nav-view>
+	
+</body>
+
+</html>
