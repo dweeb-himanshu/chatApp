@@ -16,7 +16,6 @@ angular.module("chatApp")
       console.log("getting from local...");
     }
     else{
-        //console.log($rootScope.chatContacts);
         current = $rootScope.groupContacts;
     }
 

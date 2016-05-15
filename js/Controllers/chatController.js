@@ -17,7 +17,7 @@ angular.module("chatApp")
                           locShare: false,
                           googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
                           onInit: function() {  
-                                      $applozic.fn.applozic('loadTab', ''); 
+                                      //$applozic.fn.applozic('loadTab', ''); 
                                       //enablePushnotification();
                                  }
                      });
@@ -25,6 +25,16 @@ angular.module("chatApp")
      $scope.displaySideBar = false;
      $scope.popupClass='button-setting';
     $scope.current = JSON.parse(localStorage.getItem("userDetails"));
+
+    //get current chhat history
+    $applozic.fn.applozic('getMessages',
+    {
+      callback : function(data)
+      {
+        console.log(data);
+      }
+
+    });
     $scope.showsearchBar = function ()
     {
         $scope.isSearchtrue = true;

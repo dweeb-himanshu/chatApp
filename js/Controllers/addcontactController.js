@@ -8,7 +8,8 @@ function addcontactCtrl($scope, $rootScope, $location, $stateParams, chatService
   //console.log($scope.block_id);
 
   if(!$rootScope.chatContacts){
-    current = $rootScope.chatContacts = JSON.parse(localStorage.getItem("userData"));
+    current = $rootScope.chatContacts = JSON.parse(localStorage.getItem("groupData"));
+    console.log(current)
     console.log("getting from local...");
   }
   else{
@@ -19,7 +20,6 @@ function addcontactCtrl($scope, $rootScope, $location, $stateParams, chatService
     $rootScope.userInfo = JSON.parse(localStorage.getItem("userDetails"));
     console.log("getting from local...");
   }
-  console.log(current.data.blocks[0]);
   var blocks = [];
   var users = [];
   $scope.userInfo = [];

@@ -5,8 +5,8 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
 
   $scope.isUserOwner = false;
   $scope.blockData = JSON.parse($stateParams.blockDataParam);
-  getAdminName($scope.blockData.block_owner);
   $scope.currentUser = JSON.parse(localStorage.getItem("userDetails"));
+  getAdminName($scope.blockData.block_owner);
   /*
   * Check whether we got the data from url parameter, if we got the data then set it in rootScope
   * also, so that it can be used when we come back from next page(editgroup).
@@ -17,7 +17,7 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
     if($scope.blockData.type = 'personal')
     {
 
-      chatService.getGroupData($scope.blockData.block_owner, $rootScope.userInfo.apartment_id)
+      chatService.getGroupData($scope.blockData.block_owner, $scope.currentUser.apartment_id)
         .then(function(response){
           getAdminName($scope.blockData.block_owner);
          if($scope.currentUser.user_id == $scope.blockData.block_owner)
@@ -32,7 +32,7 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
     $rootScope.blockData = $scope.blockData;
     if($scope.blockData.type = 'personal')
     {
-      chatService.getGroupData($scope.blockData.block_owner, $rootScope.userInfo.apartment_id)
+      chatService.getGroupData($scope.blockData.block_owner, $scope.currentUser.apartment_id)
         .then(function(response){
         getAdminName($scope.blockData.block_owner);  
       if($scope.currentUser.user_id == $scope.blockData.block_owner)
@@ -66,11 +66,12 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
     var userJson = JSON.stringify(user);
     $state.go('chatuser', {userDetailParam: userJson});
   }
+  console.log($scope.currentUser);
 
   //function to get admin name of group
   function getAdminName(adminId)
   {
-        chatService.getOtherUserInfo(adminId,$rootScope.userInfo.apartment_id)
+        chatService.getOtherUserInfo(adminId, $scope.currentUser.apartment_id)
             .then(function(response){
               $rootScope.AdminInfo = response.data;
               console.log($rootScope.AdminInfo);

@@ -1,5 +1,5 @@
 
-angular.module('chatApp',['ionic','ngRoute','ngResource','angular.filter']);
+angular.module('chatApp',['ionic','ngRoute','ngResource','angular.filter','angular-toArrayFilter']);
 angular.module('chatApp')
 .config(function($stateProvider,$urlRouterProvider, $ionicConfigProvider){
       $stateProvider

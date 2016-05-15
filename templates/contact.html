@@ -21,8 +21,8 @@
               <input type="text" ng-model="search" class="search-area-class form-control" style="width: 52% !important" placeholder="Search...">
               <div class="list" style="float: right; max-width: 78%; width: 25%; display: inline-block; margin-top: -9%;">
                   <label class="item-input item-select">
-                    <select ng-model="blockName" ng-change="blockNameSelected()">
-                      <option ng-repeat="bName in blocks" ng-if="bName.type === 'default'">{{bName.block_name}}</option>
+                    <select ng-model="blockName" ng-change="blockNameSelected(bName.block_id)">
+                      <option ng-repeat="bName in blockdetail"   ng-if="bName.type == 'default'">{{bName.block_name}}</option>
                       <option>All</option>
                     </select>
                 </label>
@@ -32,16 +32,15 @@
   </ion-header-bar>
 <ion-content scroll="true">
     <ion-list>
-      <span ng-repeat="block in blocks | limitTo:blockLimit"
-      ng-if="block.type === 'default' && block.block_name === blockName
-      && blockName !== 'All'">
+   <span ng-repeat="block in blockdetail"
+      ng-if="block.type === 'default' && block.block_name === blockName && blockName !== 'All'">
         <a class="item item-avatar a-class-border"
         ng-repeat="user in block.users| filter:search | orderBy:'username' | limitTo:contactLimit" ng-click="changePath(user)">
             <img ng-src="{{user.profile_image}}">
             <h2 class="display-inline item-center-list h2-font-wieght">{{user.username}}</h2>
         </a>
       </span>
-      <span ng-repeat="block in blocks | limitTo:blockLimit" ng-if="block.type === 'default' && blockName === 'All'">
+      <span ng-repeat="block in blockdetail" ng-if="block.type === 'default' && blockName === 'All'">
 
         <a class="item item-avatar a-class-border"
         ng-repeat="user in block.users| filter:search | orderBy:'username' | limitTo:contactLimit"

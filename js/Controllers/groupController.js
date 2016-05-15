@@ -9,25 +9,14 @@ angular.module("chatApp")
     var counter1 = 0;
     $scope.defaultBlocks = [{}];
     $scope.personalBlocks = [];
-    console.log("$rootScope.userInfo "+$rootScope.userInfo+ "$rootScope.groupContacts "+$rootScope.groupContacts);
-
-    if($rootScope.userInfo === undefined || $rootScope.userInfo === null){
-      $rootScope.userInfo = JSON.parse(localStorage.getItem("userDetails"));
-    }
-    if($rootScope.groupContacts === undefined || $rootScope.groupContacts === null){
-      chatService.getGroupData($rootScope.userInfo.user_id, $rootScope.userInfo.apartment_id)
+    $scope.currentuser = JSON.parse(localStorage.getItem("userDetails"));
+      chatService.getGroupData($scope.currentuser.user_id, $scope.currentuser.apartment_id)
         .then(function(response){
           current = $rootScope.groupContacts = response;
           window.localStorage["groupData"] = angular.toJson(response);
           console.log(response);
           separateGroups();
         });
-      }
-      else{
-        console.log("Taking group data from local...");
-        current = $rootScope.groupContacts = JSON.parse(localStorage.getItem("groupData"));
-        separateGroups();
-      }
       function separateGroups(){
         if(current !== null && current !== undefined){
           if(current.data == undefined){
