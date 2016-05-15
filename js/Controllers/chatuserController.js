@@ -11,9 +11,36 @@ angular.module("chatApp")
     console.log($scope.paramDetails);
     if($scope.paramDetails){
       $scope.individualChatFlag = true; //Flag set for individual chat
+          $applozic.fn.applozic({
+                        userId: $scope.currentUser.user_id,
+                        userName: $scope.currentUser.username, 
+                        imageLink:$scope.currentUser.profile_image,
+                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                          ojq: $original,
+                          maxAttachmentSize: 25, 
+                          desktopNotification: true,
+                          locShare: false,
+                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                          onInit: function() {  
+                                      $applozic.fn.applozic('loadTab', $scope.paramDetails.user_id);
+                                 }
+                     });
     }
     if($scope.groupDetails){
-      $scope.individualChatFlag = false; //Flag unset for individual chat, group chat enabled.
+          $applozic.fn.applozic({
+                        userId: $scope.currentUser.user_id,
+                        userName: $scope.currentUser.username, 
+                        imageLink:$scope.currentUser.profile_image,
+                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                          ojq: $original,
+                          maxAttachmentSize: 25, 
+                          desktopNotification: true,
+                          locShare: false,
+                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                          onInit: function() {  
+                                  $applozic.fn.applozic('loadTab', $scope.groupDetails.block_id);
+                                 }
+                     });
     }
 
      $scope.toggleSideBar = function () {

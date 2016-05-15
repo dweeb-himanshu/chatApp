@@ -6,35 +6,22 @@ angular.module("chatApp")
  
  $scope.current = JSON.parse(localStorage.getItem("userDetails"));
 //init applozic plugin for 
-    $applozic.fn.applozic({
-                        userId: $scope.current.user_id,
-                        userName: $scope.current.username, 
-                        imageLink:$scope.current.profile_image,
-                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
-                          ojq: $original,
-                          maxAttachmentSize: 25, 
-                          desktopNotification: true,
-                          locShare: false,
-                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
-                          onInit: function() {  
-                                      //$applozic.fn.applozic('loadTab', ''); 
-                                      //enablePushnotification();
-                                 }
-                     });
+
+    $applozic.fn.applozic('getMessages',
+                                      {
+                                        callback : function(data)
+                                        {
+                                          console.log(data);
+                                        }
+
+    });
      $scope.isNotificationOn = true;
      $scope.displaySideBar = false;
      $scope.popupClass='button-setting';
     $scope.current = JSON.parse(localStorage.getItem("userDetails"));
 
     //get current chhat history
-    $applozic.fn.applozic('getMessages',
-    {
-      callback : function(data)
-      {
-        console.log(data);
-      }
-
-    });
+    
     $scope.showsearchBar = function ()
     {
         $scope.isSearchtrue = true;
