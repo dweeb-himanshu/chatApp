@@ -4,7 +4,7 @@ angular.module("chatApp")
 /*
 *@function: This is controller function for contacts page.
 */
-function contactCtrl($scope, $rootScope,$timeout, $location,chatService) {
+function contactCtrl($scope, $rootScope,$timeout, $location,chatService,$state) {
   $scope.blockName = "All";
   $scope.blockLimit = 2;
   $scope.contactLimit = 10;
@@ -31,8 +31,7 @@ function contactCtrl($scope, $rootScope,$timeout, $location,chatService) {
      $scope.changePath = function (user)
       {
           var userParam=JSON.stringify(user);
-          $rootScope.targetUserid = userParam.user_id;
-          $location.path('/chat');
+          $state.go("chatuser",{userDetailParam:userParam})
       };
       $scope.BacktoChat = function ()
         {
