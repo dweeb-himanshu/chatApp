@@ -66,25 +66,6 @@ $scope.myGoBack = function () {
         localStorage.removeItem('groupData');
         $location.path('/login');
      }
-      //function to get groupdata detail like blocked user and push notoification state
-    function geUserPersonalDetail()
-    {
-      if($scope.individualChatFlag)
-      {
-        chatService.getGroupData($scope.currentUser.user_id,$scope.currentUser.apartment_id)
-            .then(function(response){
-              console.log(response);
-          var itr = 0;
-          console.log(response.data.blocked_users);
-          for(itr in response.data.blocked_users){
-          if($scope.paramDetails.user_id == response.data.blocked_users[itr].user_id)
-          {
-              $scope.UserisBlocked = true;
-          }
-        }
-            });
-      }
-    }
     function getOtherUserDetail()
     {
       if($scope.individualChatFlag)
@@ -103,7 +84,7 @@ $scope.myGoBack = function () {
           if($scope.individualChatFlag)
           {
               $ionicPopup.alert({
-             templateUrl: 'client/templates/Userinfo.html'
+             templateUrl: 'templates/Userinfo.html'
            })
           .then(function(res) {
 
@@ -125,6 +106,6 @@ $scope.myGoBack = function () {
         }
     }
     getOtherUserDetail();
-    geUserPersonalDetail();
+    //geUserPersonalDetail();
       };
    

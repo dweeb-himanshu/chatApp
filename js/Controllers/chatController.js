@@ -63,7 +63,7 @@ angular.module("chatApp")
   //   //function to go to contact page
     $scope.goToContact = function ()
     {
-        $location.path('/contact');
+        $state.go("contact",{},{reload: true})
     }
      $scope.toggleSideBar = function () {
         if($scope.displaySideBar){
