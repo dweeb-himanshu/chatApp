@@ -23,6 +23,7 @@ angular.module("chatApp")
                           googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
                           onInit: function() {  
                                       $applozic.fn.applozic('loadTab', $scope.paramDetails.user_id);
+                                      console.log('applozic');
                                  }
                      });
     }

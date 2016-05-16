@@ -803,9 +803,6 @@ input[type="text"], input[type="password"] {
 {
   margin-left: 7% !important;
 }
-.list {
-    height: 100%;
-  }
   ::-webkit-input-placeholder {
     color: #000;
 }
@@ -817,6 +814,11 @@ input[type="text"], input[type="password"] {
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
+  height: 100% !important;
+}
+.mck-button-launcher
+{
+  display: none !important;
 }
 .chat {
     width: 100%;
