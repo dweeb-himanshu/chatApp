@@ -536,14 +536,14 @@
 }.mck-top-btn-panel {
     margin: 0px;
     padding: 4px 0;
-    background-color: silver;
+    background-color: white;
     width: 100%;
     z-index: 1000;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }.mck-top-btn-panel .mck-btn {
-    margin-right: 5px;
-    margin-left: 5px;
     font-size: 13px !important;
+    margin-top: 15px;
+    margin-left: 40%;
 }.mck-price-widget { 
     background-color: #fff;
     margin: 0px !important;
@@ -662,7 +662,7 @@
     -webkit-overflow-scrolling: touch;
 }.mck-box-body .mck-message-inner {
     position: absolute;
-    background-color: #F0F0F0;
+    background-color: #fff;
     display: table-row;
     top: 0;
     right: 0;
@@ -713,8 +713,8 @@
 }.mck-sidebox textarea {
     resize: none;
 }.mck-textbox-container {
-    width: 290px;
-    max-width: 290px;
+    width: 330px;
+    max-width: 330px;
     outline: none;
     margin: auto;
     background-color: #fff;

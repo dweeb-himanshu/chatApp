@@ -3,18 +3,20 @@
 	<ion-header-bar class="bar bar-header">
 	  <button style="margin-top: 2%;width: 60px;" class="button button-icon icon button-back" ng-click="myGoBack()"></button>
 	  <img ng-src="{{paramDetails.profile_image}}" class="chat-user-image" style="margin-top: 1%;">
-	  <span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-show="individualChatFlag">{{paramDetails.username}}</span>
-		<span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-hide="individualChatFlag">{{groupDetails.block_name}}</span>
+	  <span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-show="individualChatFlag">{{paramDetails.username}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px; "></div>
+                                        <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>
+		<span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-hide="individualChatFlag">{{groupDetails.block_name}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px;></div>
+                                        <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>
 		<button class="button button-icon icon  close-button-setting custom-button-group toggle-class-left"  ng-show="displaySideBar" ng-click="toggleSideBar()" style="margin-right: 20px;width: 40px;"></button>
 		<button style="margin-top: 2%;margin-right: 20px;width: 40px;" class="button button-icon icon custom-button-group button-setting toggle-class-left chat-user-setting" ng-show="!displaySideBar" ng-click="toggleSideBar()"></button>
 	</ion-header-bar>
 	<ion-content >
 	<div id="mck-side-panel">
-            <div id="mck-sidebox" class="mck-sidebox mck-box fade">
-                <div class="mck-box-dialog mck-box-sm mck-right mck-bg-white">
+            <div id="mck-sidebox" class="mck-sidebox mck-box fade" style="width: 100%;">
+                <div class="mck-box-dialog mck-box-sm mck-right mck-bg-white" style="width: 100%;">
                     <div id="mck-sidebox-content" class="mck-sidebox-content mck-box-content">
                         <div id="mck-conversation-header" class="mck-conversation-header mck-truncate n-vis"></div>
-                        <div class="mck-box-top">
+                        <div class="mck-box-top" style="display: none;">
                             <button type="button" class="mck-minimize-icon mck-box-close mck-close icon n-vis"><span aria-hidden="true">&minus;</span></button>           
                             <div class="blk-lg-2 move-right">
                                 <button type="button" class="mck-box-close mck-close-sidebox" data-dismiss="mckbox" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -67,12 +69,12 @@
                         <div id="mck-tab-option-panel" class="mck-tab-panel mck-top-btn-panel">
                             <div id="mck-tab-menu-box" class="mck-tab-menu-box vis">
                                 <div class="mck-row">
-                                    <div class="blk-lg-10">
+                                    <div class="blk-lg-12">
                                         <button type="button" id="mck-show-more" class="mck-show-more mck-tab-message-option mck-btn-light mck-btn mck-btn-default" title="Show More">
                                             <span>Show More</span>
                                         </button>
                                     </div>
-                                    <div class="blk-lg-2">
+                                    <div class="blk-lg-2" style="display:none;">
                                         <div class="mck-dropdown-toggle" data-toggle="mckdropdown" aria-expanded="true">
                                             <img src="applozic/css/app/images/mck-icon-menu.png" alt="Tab Menu">
                                         </div>
@@ -246,23 +248,6 @@
         </div>
 
 	</ion-content>
-  <ion-footer-bar keyboard-attach="" class="bar-stable bar-footer item-input-inset bar bar-footer">
-		<!--button class="button button-icon icon button-show-attachemnt"
-		ng-click="showAttachment()" style="margin-left: -1%;"></button-->
-		<span class="button-show-attachment" style="width: 45px;">
-			<!--input type="file" accept="image/*" ng-click="uploadImage()"
-			class="button button-icon icon" style="margin-left: -1%;"-->
-			<!--input type="file" class="button"  ngf-select="" ngf-change="addImages($files)" ngf-multiple="false"
-			ngf-allow-dir="false" ngf-accept="'image/*'"-->
-			<input type="file" ngf-select="" name="file" ngf-accept="'image/*'" accept="image/*"
-			ngf-change="sendMessage($files)">
-		</span>
-		<textarea class="animate msd-elastic: \n;" ng-maxlength="200"  placeholder="Type message" ng-model="enterMessage" ng-focus="inputUp()" ng-blur="inputDown()" style="height: 34px;"></textarea>
-		<button type="submit" class="emoticons-class" style=""><img src="images/emoticon85.png" alt="Arrow Icon" style="height: 27px;"></button>
-    <button class="button button-clear" ng-click="sendMessage()">
-		<img src="images/Send.png" alt="sendimage" />
-	</button>
-</ion-footer-bar>
 
 <div class="float-right" id="settings-popup" ng-show="displaySideBar">
 		<ion-list style="background: #848484; height: 100%;">
@@ -284,9 +269,9 @@
 				<span class="settings-text">UnBlock</span>
 				</div>
 			</ion-item>
-			<ion-item class="grey-background ion-non-height" ng-hide="UserisBlocked" ng-click="blockUser();toggleSideBar();" ng-class="{'ion-height': individualChatFlag}">
+			<ion-item class="grey-background ion-non-height" ng-hide="UserisBlocked" ng-click="blockUser();toggleSideBar();" ng-class="{'ion-height': individualChatFlag}" id="">
 			<div class="setting-no-div">
-				<img class="settings-images" src="images/Settings_Block.png" alt="block" />
+				<img class="settings-images" id="mck-block-button" src="images/Settings_Block.png" alt="block" />
 				<span class="settings-text">Block</span>
 				</div>
 			</ion-item>

@@ -1,7 +1,7 @@
 "use strict";
 var app = angular.module("chatApp");
   app.controller('loginwebCtrl',['$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($scope, $window, chatService, $rootScope,$location,$ionicPopup) {
-    if(localStorage.getItem("userDetails") === null)
+    if(localStorage.getItem("userDetails") == null)
     {
       $rootScope.Isloggedin=false;
       $scope.username = null;
