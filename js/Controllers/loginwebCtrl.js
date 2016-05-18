@@ -1,6 +1,6 @@
 "use strict";
 var app = angular.module("chatApp");
-  app.controller('loginwebCtrl',['$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($scope, $window, chatService, $rootScope,$location,$ionicPopup) {
+  app.controller('loginwebCtrl',['$http','$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($http,$scope, $window, chatService, $rootScope,$location,$ionicPopup) {
     if(localStorage.getItem("userDetails") == null)
     {
       $rootScope.Isloggedin=false;
@@ -35,7 +35,23 @@ var app = angular.module("chatApp");
               only once.
               */
               $scope.current = JSON.parse(localStorage.getItem("userDetails"));
-              
+              $http({
+                  url: 'https://apps.applozic.com/rest/ws/register/client',
+                  method: "POST",
+                  data: { 
+                    'userId' : $scope.current.user_id,
+                    'displayName':$scope.current.username,
+                    'applicationId':'31b9e5c457ead58f874571e5ce7eb730',
+                    'deviceType':1
+
+                }
+              })
+              .then(function(response) {
+              window.localStorage["applozicDetails"] = angular.toJson(response);
+              }, 
+              function(response) { // optional
+                      // failed
+              });
 
               function enablePushnotification()
               {

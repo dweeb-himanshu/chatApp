@@ -34,7 +34,7 @@
     <ion-list>
    <span ng-repeat="block in blockdetail"
       ng-if="block.type === 'default' && block.block_name === blockName && blockName !== 'All'">
-        <a class="item item-avatar a-class-border applozic-launcher" data-mck-id="{{user.user_id}}" data-mck-name="{{user.username}}"
+        <a class="item item-avatar a-class-border"
         ng-repeat="user in block.users| filter:search | orderBy:'username' | limitTo:contactLimit" ng-click="changePath(user)">
             <img ng-src="{{user.profile_image}}">
             <h2 class="display-inline item-center-list h2-font-wieght">{{user.username}}</h2>
