@@ -536,14 +536,14 @@
 }.mck-top-btn-panel {
     margin: 0px;
     padding: 4px 0;
-    background-color: white;
+    background-color: silver;
     width: 100%;
     z-index: 1000;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }.mck-top-btn-panel .mck-btn {
+    margin-right: 5px;
+    margin-left: 5px;
     font-size: 13px !important;
-    margin-top: 15px;
-    margin-left: 40%;
 }.mck-price-widget { 
     background-color: #fff;
     margin: 0px !important;
@@ -662,7 +662,7 @@
     -webkit-overflow-scrolling: touch;
 }.mck-box-body .mck-message-inner {
     position: absolute;
-    background-color: #fff;
+    background-color: #F0F0F0;
     display: table-row;
     top: 0;
     right: 0;
@@ -713,8 +713,8 @@
 }.mck-sidebox textarea {
     resize: none;
 }.mck-textbox-container {
-    width: 330px;
-    max-width: 330px;
+    width: 290px;
+    max-width: 290px;
     outline: none;
     margin: auto;
     background-color: #fff;
@@ -739,6 +739,7 @@
     border: 1px solid #E7F1F5;
     border-radius: 4px;
     box-shadow: none !important;
+    -webkit-user-select: text;
 }.mck-text-box-panel {
     width: 25px !important;
 }.mck-text-box-panel .mck-blk-12 {
@@ -805,6 +806,7 @@
     height: 20px;
     background: green;
     border-radius: 4px;
+    width: 0%;
 }.mck-text-req {
     border: 1px solid #EB5858 !important;
 }.mck-msg-box {
@@ -820,6 +822,11 @@
     width:18px;
     height: 18px;
     vertical-align: middle;
+}.mck-cont-msg-wrapper p {
+    margin: 0px !important;  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }.mck-file-text .mck-file-name img:hover {
     opacity: 1 !important;
     background-color: transparent !important; 
@@ -952,8 +959,6 @@
     width: 100%;
     font-size: 30px;
     font-weight: bold;
-}.mck-alpha-contact-image .mck-contact-icon {
-    top: 14px;
 }.alpha_D .mck-contact-icon {
     top: 16px;
     left: 1px;
