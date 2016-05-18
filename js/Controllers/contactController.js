@@ -1,4 +1,5 @@
 "use strict";
+//contact controller contacts loading..
 angular.module("chatApp")
   .controller('contactCtrl', contactCtrl);
 /*
@@ -31,6 +32,7 @@ function contactCtrl($scope, $rootScope,$timeout, $location,chatService,$state) 
      $scope.changePath = function (user)
       {
           var userParam=JSON.stringify(user);
+          $applozic.fn.applozic('loadTab', userParam.user_id)
           $state.go("chatuser",{userDetailParam:userParam},{reload: true})
       };
       $scope.BacktoChat = function ()

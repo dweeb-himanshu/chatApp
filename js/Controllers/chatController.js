@@ -1,4 +1,5 @@
 "use strict";
+//after login screen here I have to load all recent messeges
 angular.module("chatApp")
   .controller('chatCtrl', chatCtrl);
 
@@ -16,16 +17,18 @@ angular.module("chatApp")
                           desktopNotification: true,
                           locShare: false,
                           googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
-                          onInit: function() {  
-                                       $applozic.fn.applozic('getMessages',
-                                      {
-                                        callback : function(data)
-                                        {
-                                          console.log(data);
-                                        }
-                                  });
+                          onInit: function() { 
+                          $applozic.fn.applozic('getMessages',
+                          {
+                            callback : function(data)
+                            {
+                              console.log(data);
+                              console.log('applozic get all recent messeges');
+                            }
+                      }); 
                                  }
                      });
+                   
    
      $scope.isNotificationOn = true;
      $scope.displaySideBar = false;
@@ -63,7 +66,7 @@ angular.module("chatApp")
   //   //function to go to contact page
     $scope.goToContact = function ()
     {
-        $state.go("contact",{},{reload: true})
+        $location.path('/contact');
     }
      $scope.toggleSideBar = function () {
         if($scope.displaySideBar){

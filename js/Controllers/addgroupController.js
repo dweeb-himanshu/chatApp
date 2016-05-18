@@ -1,7 +1,7 @@
 "use strict";
 angular.module("chatApp")
   .controller('addgroupCtrl', addgroupCtrl);
-  function addgroupCtrl($scope, $rootScope, $location, $window, chatService) {
+  function addgroupCtrl($http,$scope, $rootScope, $location, $window, chatService) {
     $scope.isBlockDisabled = true;
     $scope.newGroupName = null;
     $scope.users = [];
@@ -11,6 +11,8 @@ angular.module("chatApp")
      * {Same thing done at contactController.js}
      */
     var current = {};
+    $scope.applozicdetail = JSON.parse(localStorage.getItem("applozicDetails"));
+            console.log($scope.applozicdetail);
     if(!$rootScope.groupContacts){
       current = $rootScope.groupContacts = JSON.parse(localStorage.getItem("groupData"));
       console.log("getting from local...");
@@ -81,8 +83,11 @@ angular.module("chatApp")
           if($scope.users.length != 0){
             console.log("users selected::"+$scope.users);
             var users = [];
+            var applozicUsers = [];
             var itr = 0;
             for(itr in $scope.users){
+              
+              applozicUsers.push($scope.users[itr]);
               users.push({
                 user_id: $scope.users[itr]
               });
@@ -95,6 +100,22 @@ angular.module("chatApp")
               block_name: $scope.newGroupName,
               users: users
             };
+            //create new applozic group
+              $http({
+                  headers: {'deviceKey': $scope.applozicdetail.deviceKey},
+                  url: 'https://apps.applozic.com/rest/ws/group/create',
+                  method: "POST",
+                  data: { 
+                    'groupName' : $scope.newGroupName,
+                    'groupMemberList' : applozicUsers
+                }
+              })
+              .then(function(response) {
+              console.log(response);
+              }, 
+              function(response) { // optional
+                      // failed
+              });
             chatService.postNewGroup(newGroupData)
               .success(function(response){
                 console.log(response);

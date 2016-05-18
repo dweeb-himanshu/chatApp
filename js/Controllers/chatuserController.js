@@ -1,9 +1,11 @@
 "use strict";
+//where chat window open
 angular.module("chatApp")
   .controller('chatuserCtrl', chatuserCtrl);
 
   function chatuserCtrl($scope, $state,$rootScope, $anchorScroll,chatService,$ionicPopup, $location, $ionicScrollDelegate, $stateParams, $timeout) {
    
+
       $scope.paramDetails=JSON.parse($stateParams.userDetailParam);
     $scope.groupDetails = JSON.parse($stateParams.groupDetailParam);
     $scope.currentUser = JSON.parse(localStorage.getItem("userDetails"));
@@ -11,38 +13,14 @@ angular.module("chatApp")
     console.log($scope.paramDetails);
     if($scope.paramDetails){
       $scope.individualChatFlag = true; //Flag set for individual chat
-          $applozic.fn.applozic({
-                        userId: $scope.currentUser.user_id,
-                        userName: $scope.currentUser.username, 
-                        imageLink:$scope.currentUser.profile_image,
-                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
-                          ojq: $original,
-                          maxAttachmentSize: 25, 
-                          desktopNotification: true,
-                          locShare: false,
-                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
-                          onInit: function() {  
-                                      $applozic.fn.applozic('loadTab', $scope.paramDetails.user_id);
-                                      console.log('applozic');
-                                 }
-                     });
-    }
+          console.log($scope.paramDetails.user_id);
+          $applozic.fn.applozic('loadTab', $scope.paramDetails.user_id);
+          console.log('applozic');
+     }
     if($scope.groupDetails){
-          $applozic.fn.applozic({
-                        userId: $scope.currentUser.user_id,
-                        userName: $scope.currentUser.username, 
-                        imageLink:$scope.currentUser.profile_image,
-                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
-                          ojq: $original,
-                          maxAttachmentSize: 25, 
-                          desktopNotification: true,
-                          locShare: false,
-                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
-                          onInit: function() {  
-                                  $applozic.fn.applozic('loadTab', $scope.groupDetails.block_id);
-                                 }
-                     });
-    }
+     
+      $applozic.fn.applozic('loadTab', $scope.groupDetails.block_id);
+     }
 
      $scope.toggleSideBar = function () {
         //$ionicSideMenuDelegate.toggleRight();
@@ -56,6 +34,7 @@ angular.module("chatApp")
         }
     };
 $scope.myGoBack = function () {
+  $applozic(".mck-close-sidebox").trigger('click');
             $location.path('/chat');
     };
 
