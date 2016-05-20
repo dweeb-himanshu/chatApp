@@ -6,6 +6,8 @@ angular.module("chatApp")
   function chatCtrl($scope, $rootScope, chatService, $ionicLoading,$timeout,$ionicPopup, $http,  $state, $location, $ionicModal, $ionicSideMenuDelegate) {
  
  $scope.current = JSON.parse(localStorage.getItem("userDetails"));
+ $scope.recentmesseges = {};
+ $scope.allContacts = {};
 //init applozic plugin for 
  $applozic.fn.applozic({
                         userId: $scope.current.user_id,
@@ -23,7 +25,7 @@ angular.module("chatApp")
                             callback : function(data)
                             {
                               console.log(data);
-                              console.log('applozic get all recent messeges');
+                              $scope.recentmesseges = data.data
                             }
                       }); 
                                  }
@@ -34,6 +36,16 @@ angular.module("chatApp")
      $scope.displaySideBar = false;
      $scope.popupClass='button-setting';
     $scope.current = JSON.parse(localStorage.getItem("userDetails"));
+    function getallContacts()
+    {
+        chatService.getallContact($scope.current.user_id, $scope.current.apartment_id)
+            .then(function(response){
+              console.log(response);
+              for(var i in response.data.blocks){ 
+              $scope.allContacts[i] = response.data.blocks[i];
+            };
+            });
+    };
 
     //get current chhat history
     
@@ -127,4 +139,5 @@ angular.module("chatApp")
             });
     }
      getOtherUserDetail();
+     getallContacts();
 };

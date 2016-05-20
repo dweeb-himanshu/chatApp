@@ -34,9 +34,11 @@ function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $st
         /*Getting info of current user*/
         var currentUser = JSON.parse(localStorage.getItem("userDetails"));
         var users = [];
+        var applozicUsers =[];
         var itr = 0;
         console.log($scope.users);
         for(itr in $scope.users){
+          applozicUsers.push($scope.users[itr]);
           users.push({
             user_id: $scope.users[itr]
           });
@@ -48,6 +50,22 @@ function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $st
           users: users
         };
         console.log(updateGroupData);
+        //create new applozic group
+              $http({
+                  headers: {'deviceKey': $scope.applozicdetail.deviceKey},
+                  url: 'https://apps.applozic.com/rest/ws/group/remove/member',
+                  method: "GET",
+                  data: { 
+                    'groupName' : $scope.newGroupName,
+                    'groupMemberList' : applozicUsers
+                }
+              })
+              .then(function(response) {
+              console.log(response);
+              }, 
+              function(response) { // optional
+                      // failed
+              });
         chatService.postUpdateGroup(updateGroupData)
           .success(function(response){
               console.log(response);

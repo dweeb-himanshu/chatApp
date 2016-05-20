@@ -16,12 +16,12 @@
 
 	</ion-content>
 
-<div class="float-right" id="settings-popup" ng-show="displaySideBar">
-		<ion-list style="background: #848484; height: 100%;">
+<div class="float-right" id="settings-popup" ng-show="displaySideBar" style="z-index:999999;">
+		<ion-list style="background: #848484; height: 100%;z-index:999999;">
 			<ion-item class="grey-background ion-non-height" ng-click="toggleSideBar();showUserInfo()" ng-class="{'ion-height': individualChatFlag}">
 			<div class="setting-no-div" ng-class="{'setting-div': individualChatFlag}">
       	<img class="settings-images" src="images/Main_Contacts.png" alt="contact info"/>
-				<span class="settings-text">Contact Info</span>
+				<span class="settings-text">Contact Info</span> 
 				</div>
 			</ion-item>
 			<ion-item class="grey-background ion-non-height" ng-click="toggleSideBar();GetotherPhonenumber()" ng-class="{'ion-height': individualChatFlag}">

@@ -30,53 +30,24 @@ span > img{
       </div>
   </ion-header-bar>
   <ion-content>
-    <!-- <ion-list>
-      <a class="item item-avatar a-class-border" ng-repeat="recent in recentMessages| filter: search" ng-click="changePath(recent)">
-          <span ng-if="recent.sender.user_id != current.user_id && recent.groupMessage === false" >
-            <img ng-src="{{recent.sender.profile_image}}">
-            <p class="display-inline h2-font-weight">{{recent.sender.username}}</p>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span>
-            <p style="padding-top: 5px;">
-                <img ng-if="recent.msgReached" src="images/Blue-tick2.png" class="tick-image-class-2">
+    <ion-list>
+       <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message| filter: search" ng-click="changePath(recent)">
+        <span ng-repeat="block in allContacts" ng-if="block.type === 'default'">
+        <span class="item item-avatar a-class-border" ng-repeat="user in block.users" ng-if="recent.contactIds == user.user_id ">
+            <img ng-src="{{user.profile_image}}">
+            <p class="display-inline h2-font-weight">{{user.username}}</p>
+        </span>
+      </span>
+                <img ng-if="recent.read" src="images/Blue-tick2.png" class="tick-image-class-2">
                 <span>{{recent.message}}</span>
             </p>
-          </span>
-          <span ng-if="recent.receiver.user_id != current.user_id && recent.groupMessage === false" ng-click="changePath(recent)">
-            <img ng-src="{{recent.receiver.profile_image}}">
-            <p class="display-inline h2-font-weight">{{recent.receiver.username}}</p>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span>
-            <p style="padding-top: 5px;">
-                <img ng-if="recent.msgReached" src="images/Blue-tick2.png" class="tick-image-class-2">
-                <span>{{recent.message}}</span>
-            </p>
-          </span>
-
-          <span ng-if="recent.groupMessage === true && recent.sender === current.user_id" ng-click="changePath(recent)">
-          <img src="images/group_icon.png" style="margin-top: -7px;">
-            <p class="display-inline h2-font-weight">{{recent.sender}}</p>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span>
-            <p style="padding-top: 5px;">
-                <span>{{recent.message}}</span>
-            </p>
-          </span>
-          <span ng-if="recent.groupMessage === true && recent.sender !== current.user_id" ng-click="changePath(recent)">
-            <p class="display-inline h2-font-weight">{{recent.sender}}</p>
-            <img src="images/group_icon.png" style="margin-top: -7px;">
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span>
-            <p style="padding-top: 5px;">
-                <span>{{recent.message}}</span>
-            </p>
-          </span>
+         
       </a>
-      <div ng-if="recentMessages.length === 0" style="position: absolute; margin-top: 30px; left: 32%;">
+      <div ng-if="recentmesseges.data.messeges === 0" style="position: absolute; margin-top: 30px; left: 32%;">
       <p>{{NoRecentConversation}}</p>
          <ion-spinner></ion-spinner>
       </div>
-  </ion-list> -->
+  </ion-list> 
   </ion-content>
   <ion-footer-bar keyboard-attach="" class="bar-stable item-input-inset bar bar-footer" style="background:#848484;">
     <div class="" style="text-align: center;width: 100%;">
