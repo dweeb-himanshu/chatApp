@@ -17,9 +17,8 @@ angular.module("chatApp")
           $applozic.fn.applozic('loadTab', $scope.paramDetails.user_id);
           console.log('applozic');
      }
-    if($scope.groupDetails){
-     
-      $applozic.fn.applozic('loadTab', $scope.groupDetails.block_id);
+    if($scope.groupDetails){    
+      $applozic.fn.applozic('loadGroupTab', $scope.groupDetails.group_id);
      }
 
      $scope.toggleSideBar = function () {

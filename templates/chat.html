@@ -31,19 +31,20 @@ span > img{
   </ion-header-bar>
   <ion-content>
     <ion-list>
-       <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message| filter: search" ng-click="changePath(recent)">
-        <span ng-repeat="block in allContacts" ng-if="block.type === 'default'">
-        <span class="item item-avatar a-class-border" ng-repeat="user in block.users" ng-if="recent.contactIds == user.user_id ">
-            <img ng-src="{{user.profile_image}}">
-            <p class="display-inline h2-font-weight">{{user.username}}</p>
-        </span>
-      </span>
+        <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message | filter: search" ng-click="changePath(recent)">
+          <span ng-repeat="user in recentmesseges.userDetails" ng-if="recent.contactIds == user.userId">
+            <img ng-src="{{user.imageLink}}">
+            <p class="display-inline h2-font-weight">{{user.displayName}}</p>
+           <!--  <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
+            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span> -->
+            </span>
+            </span>
+            <p style="padding-top: 5px;">
                 <img ng-if="recent.read" src="images/Blue-tick2.png" class="tick-image-class-2">
                 <span>{{recent.message}}</span>
             </p>
-         
-      </a>
-      <div ng-if="recentmesseges.data.messeges === 0" style="position: absolute; margin-top: 30px; left: 32%;">
+            </a>
+      <div ng-if="recentmesseges.messeges == 0" style="position: absolute; margin-top: 30px; left: 32%;">
       <p>{{NoRecentConversation}}</p>
          <ion-spinner></ion-spinner>
       </div>

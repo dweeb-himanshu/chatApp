@@ -11,8 +11,6 @@ angular.module("chatApp")
      * {Same thing done at contactController.js}
      */
     var current = {};
-    $scope.applozicdetail = JSON.parse(localStorage.getItem("applozicDetails"));
-            console.log($scope.applozicdetail);
     if(!$rootScope.groupContacts){
       current = $rootScope.groupContacts = JSON.parse(localStorage.getItem("groupData"));
       console.log("getting from local...");
@@ -20,7 +18,9 @@ angular.module("chatApp")
     else{
         current = $rootScope.groupContacts;
     }
-
+$scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+  var AuthorizationCode = localStorage.getItem("AuthorizationCode");
+  var defaultGroupname  = localStorage.getItem("DefaultGroup");
     var blocks = [];
     var users = [];
     $scope.userInfo = [];
@@ -78,8 +78,10 @@ angular.module("chatApp")
      */
     $scope.createGroup = function ()
     {
+
         if($scope.newGroupName != null && $scope.newGroupName != ''){
-          console.log("New Group Name::"+$scope.newGroupName);
+          if($scope.newGroupName != defaultGroupname)
+          {
           if($scope.users.length != 0){
             console.log("users selected::"+$scope.users);
             var users = [];
@@ -102,9 +104,14 @@ angular.module("chatApp")
             };
             //create new applozic group
               $http({
-                  headers: {'deviceKey': $scope.applozicdetail.deviceKey},
                   url: 'https://apps.applozic.com/rest/ws/group/create',
                   method: "POST",
+                  headers: {
+                "Authorization": AuthorizationCode,
+                "UserId-Enabled": true,
+                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Device-Key": $scope.applozicCred.data.deviceKey
+        },
                   data: { 
                     'groupName' : $scope.newGroupName,
                     'groupMemberList' : applozicUsers
@@ -129,6 +136,11 @@ angular.module("chatApp")
           else{
             alert("Please select group members");
           }
+        }
+        else
+        {
+          alert("Group name can not be same as default");
+        }
         }
         else{
           alert("Please enter group name...");
@@ -169,4 +181,5 @@ angular.module("chatApp")
         console.log($scope.users[i]);
       }*/
     }
+    
 };

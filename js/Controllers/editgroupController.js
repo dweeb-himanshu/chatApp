@@ -1,7 +1,7 @@
 "use strict";
 angular.module("chatApp")
   .controller('editgroupCtrl', editgroupCtrl);
-function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $state, chatService) {
+function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParams, $state, chatService) {
   $scope.blockData = JSON.parse($stateParams.blockDataParam);
   console.log($scope.blockData);
   /*
@@ -9,6 +9,8 @@ function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $st
    * so that it can reused when we come back from next page, when there would be no
    * url parameter to provide data.
    */
+   $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+  var AuthorizationCode = localStorage.getItem("AuthorizationCode");
   if($scope.blockData == null || $scope.blockData == ''){
     console.log("No data in scope");
     $scope.blockData = $rootScope.blockData;
@@ -20,16 +22,21 @@ function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $st
 
   $scope.BacktoEditGroup = function ()
   {
-      $location.path('/groupwiseuser')
+      var blockDataJson = JSON.stringify($scope.blockData);
+      $state.go('groupwiseuser', {blockDataParam: blockDataJson });
   }
   $scope.addContact = function ()
   {
-      console.log($scope.blockData.block_id);
-      var blockId = $scope.blockData.block_id;
-      $state.go('addcontact',{blockIdParam:blockId});
+      console.log($scope.blockData);  
+       $scope.blockId={};
+      $scope.blockId.blockId = $scope.blockData.block_id;
+      $scope.blockId.group_id = $scope.blockData.group_id;
+      var blockData = JSON.stringify($scope.blockId);
+      $state.go('addcontact',{blockIdParam:blockData});
   }
   $scope.SetGroup = function()
   {
+    console.log($scope.blockData);
       if($scope.users.length>0){
         /*Getting info of current user*/
         var currentUser = JSON.parse(localStorage.getItem("userDetails"));
@@ -49,15 +56,20 @@ function editgroupCtrl($scope, $rootScope, $location, $window, $stateParams, $st
           block_id: $scope.blockData.block_id,
           users: users
         };
-        console.log(updateGroupData);
+        console.log(applozicUsers);
         //create new applozic group
               $http({
-                  headers: {'deviceKey': $scope.applozicdetail.deviceKey},
                   url: 'https://apps.applozic.com/rest/ws/group/remove/member',
                   method: "GET",
+                  headers: {
+                    "Authorization": AuthorizationCode,
+                    "UserId-Enabled": true,
+                    "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                    "Device-Key": $scope.applozicCred.data.deviceKey
+                },
                   data: { 
-                    'groupName' : $scope.newGroupName,
-                    'groupMemberList' : applozicUsers
+                    'groupId' : $scope.blockData.group_id,
+                    'userId' : applozicUsers
                 }
               })
               .then(function(response) {

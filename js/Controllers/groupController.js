@@ -1,7 +1,7 @@
 "use strict";
 angular.module("chatApp")
   .controller('groupCtrl', groupCtrl);
-  function groupCtrl($scope, $rootScope, chatService, $location, $state) {
+  function groupCtrl($scope, $rootScope, chatService,$http, $location, $state) {
     $rootScope.isConatct ='3'
     var current = [];
     var itr = 0;
@@ -10,6 +10,9 @@ angular.module("chatApp")
     $scope.defaultBlocks = [{}];
     $scope.personalBlocks = [];
     $scope.currentuser = JSON.parse(localStorage.getItem("userDetails"));
+    $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+  var AuthorizationCode = localStorage.getItem("AuthorizationCode");
+  $scope.defaultGroupid  = localStorage.getItem("DefaultGroupid");
       chatService.getGroupData($scope.currentuser.user_id, $scope.currentuser.apartment_id)
         .then(function(response){
           current = $rootScope.groupContacts = response;
@@ -65,7 +68,20 @@ angular.module("chatApp")
     */
     $scope.changePath = function (blockData)
     {
-        var blockDataJson = JSON.stringify(blockData);
+
+        console.log($scope.ApplozicGroupdetail);
+        
+        console.log(blockData);
+        var itr = 0;
+        for(itr in $scope.ApplozicGroupdetail.data.response)
+        {
+        
+          if($scope.ApplozicGroupdetail.data.response[itr].name == blockData.block_name)
+          {
+            blockData.group_id = $scope.ApplozicGroupdetail.data.response[itr].id;
+        }
+      }
+      var blockDataJson = JSON.stringify(blockData);
         $state.go('chatuser', {groupDetailParam: blockDataJson });
     };
     /*
@@ -74,9 +90,33 @@ angular.module("chatApp")
     */
     $scope.expandGroup = function (blockData)
     {
+        for(itr in $scope.ApplozicGroupdetail.data.response)
+        {
+        
+          if($scope.ApplozicGroupdetail.data.response[itr].name == blockData.block_name)
+          {
+            blockData.group_id = $scope.ApplozicGroupdetail.data.response[itr].id;
+        }
+      }
       var blockDataJson = JSON.stringify(blockData);
       //console.log(blockDataJson);
       $state.go('groupwiseuser', {blockDataParam: blockDataJson})
     };
-
+          $http({
+                  url: 'https://apps.applozic.com/rest/ws/group/list',
+                  method: "GET",
+                  headers: {
+                "Authorization": AuthorizationCode,
+                "UserId-Enabled": true,
+                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Device-Key": $scope.applozicCred.data.deviceKey
+        }
+              })
+              .then(function(response) {
+              $scope.ApplozicGroup = response;
+              $scope.ApplozicGroupdetail = response;
+              }, 
+              function(response) { // optional
+                      // failed
+              });
 };

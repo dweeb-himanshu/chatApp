@@ -1,12 +1,13 @@
 "use strict";
 angular.module("chatApp")
   .controller('addcontactCtrl', addcontactCtrl);
-function addcontactCtrl($scope, $rootScope, $location, $stateParams, chatService) {
+function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatService) {
   $scope.users = [];
   var current = [];
-  $scope.block_id = $stateParams.blockIdParam ;
-  //console.log($scope.block_id);
-
+  var applozicUsers =[];
+  $scope.block_id = JSON.parse($stateParams.blockIdParam);
+  $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+  var AuthorizationCode = localStorage.getItem("AuthorizationCode");
   if(!$rootScope.chatContacts){
     current = $rootScope.chatContacts = JSON.parse(localStorage.getItem("groupData"));
     console.log(current)
@@ -66,10 +67,12 @@ function addcontactCtrl($scope, $rootScope, $location, $stateParams, chatService
     if(event.target.classList.contains("button-select-user")){
       event.target.classList.remove("button-select-user");
       event.target.classList.add("button-select-user-activated");
+      
       $scope.users.push({
         user_id: user_id
       });
-      console.log($scope.users);
+      applozicUsers.push(user_id);
+      console.log(applozicUsers);
     }
     else{
       event.target.classList.remove("button-select-user-activated");
@@ -88,20 +91,46 @@ function addcontactCtrl($scope, $rootScope, $location, $stateParams, chatService
 
   };
   $scope.SetGroup = function(){
+    console.log($scope.block_id.group_id);
     var addUsersGroup = {
       user_id: $rootScope.userInfo.user_id,
       apartment_id: $rootScope.userInfo.apartment_id,
-      block_id: $scope.block_id,
+      block_id: $scope.block_id.block_id,
       users: $scope.users
     };
     chatService.postUsersGroup(addUsersGroup)
       .success(function(response){
         console.log(response);
         window.localStorage["groupData"] = angular.toJson(response);
-        $location.path('/group');
+        appLoziaddmember();
+        
       })
       .error(function(err){
         console.log(err);
-      });
+      });               
   }
+  function appLoziaddmember()
+        {
+          alert($scope.block_id.group_id);
+          $http({
+                  url: 'https://apps.applozic.com/rest/ws/group/add/member',
+                  method: "GET",
+                  headers: {
+                    "Authorization": AuthorizationCode,
+                    "UserId-Enabled": true,
+                    "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                    "Device-Key": $scope.applozicCred.data.deviceKey
+                },
+                  data: { 
+                    'groupId' : $scope.block_id.group_id,
+                    'userId' : applozicUsers
+                }
+              })
+              .then(function(response) {
+              $location.path('/group');
+              }, 
+              function(response) { // optional
+                      // failed
+              });
+        }
 };
