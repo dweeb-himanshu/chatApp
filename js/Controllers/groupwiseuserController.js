@@ -1,50 +1,63 @@
 "use strict";
 angular.module("chatApp")
   .controller('groupwiseuserCtrl', groupwiseuserCtrl);
-function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,chatService) {
+function groupwiseuserCtrl($scope,$http, $rootScope, $location, $state, $stateParams,chatService) {
 
   $scope.isUserOwner = false;
+  $scope.Groupuserdetail = {};
+  $scope.UserArray = [];
   $scope.blockData = JSON.parse($stateParams.blockDataParam);
   $scope.currentUser = JSON.parse(localStorage.getItem("userDetails"));
-  getAdminName($scope.blockData.block_owner);
+  $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+  var AuthorizationCode = localStorage.getItem("AuthorizationCode");
+  getAdminName(parseInt($scope.blockData.adminName));
   /*
   * Check whether we got the data from url parameter, if we got the data then set it in rootScope
   * also, so that it can be used when we come back from next page(editgroup).
   * This check is used to make the back functionality work smoothly.
    */
-  if($scope.blockData == null || $scope.blockData == ''){
-    $scope.blockData = $rootScope.blockData;
-    if($scope.blockData.type = 'personal')
-    {
-
-      chatService.getGroupData($scope.blockData.block_owner, $scope.currentUser.apartment_id)
-        .then(function(response){
-          getAdminName($scope.blockData.block_owner);
-         if($scope.currentUser.user_id == $scope.blockData.block_owner)
+    if($scope.blockData != null){
+         if($scope.currentUser.user_id == parseInt($scope.blockData.adminName))
           {
             $scope.isUserOwner = true;
           }
-        });
-
     }
-  }
-  else{
-    $rootScope.blockData = $scope.blockData;
-    if($scope.blockData.type = 'personal')
+
+
+  
+  function getGroupUserList()
+  {
+    var itr = 0;
+    for(itr in $scope.blockData.membersName)
     {
-      chatService.getGroupData($scope.blockData.block_owner, $scope.currentUser.apartment_id)
-        .then(function(response){
-        getAdminName($scope.blockData.block_owner);  
-      if($scope.currentUser.user_id == $scope.blockData.block_owner)
-      {
-        $scope.isUserOwner = true;
-      }
-        });
+      $scope.UserArray.push(parseInt($scope.blockData.membersName[itr]));
     }
+    getUserdetail();
   }
-
-
-  console.log($scope.blockData);
+  function getUserdetail(){
+    console.log($scope.UserArray)
+      //get group user detail
+       $http({
+                  url: 'https://apps.applozic.com/rest/ws/user/detail',
+                  method: "GET",
+                  headers: {
+                "Authorization": AuthorizationCode,
+                "UserId-Enabled": true,
+                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Device-Key": $scope.applozicCred.data.deviceKey
+        },
+                  params: { 
+                    'userIds' : $scope.UserArray
+                }
+              })
+              .then(function(response) {
+                console.log(response);
+              $scope.Groupuserdetail  = response.data;
+              }, 
+              function(response) { // optional
+                      // failed
+              });
+  }
 
   $rootScope.isConatct='2';
   $scope.BacktoGroup = function ()
@@ -63,6 +76,7 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
   */
   $scope.changePath = function(user)
   {
+    user.user_id = user.userId;
     var userJson = JSON.stringify(user);
     $state.go('chatuser', {userDetailParam: userJson});
   }
@@ -77,4 +91,5 @@ function groupwiseuserCtrl($scope, $rootScope, $location, $state, $stateParams,c
               console.log($rootScope.AdminInfo);
             });
   }
+  getGroupUserList();
 };

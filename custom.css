@@ -20,6 +20,40 @@
     width: 60px;
     height: 60px;
 }
+.counter
+{
+  font-size: 16px;
+    margin-top: 1px;
+    margin-left: 240px !important;
+    font-weight: 700;
+}
+.read-class
+{
+    display: inline-block;
+    background: url(applozic/css/app/images/mck-plugin-sprite.png) no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
+    background-position: -10px -744px;
+}
+.sent-class
+{
+  display: inline-block;
+    background: url(applozic/css/app/images/mck-plugin-sprite.png) no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
+    background-position: -10px -770px;
+}
+.delivered-class
+{
+   display: inline-block;
+    background: url(applozic/css/app/images/mck-plugin-sprite.png) no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    text-align: left;
+   background-position: -10px -718px;
+}
 .list
 {
   height: 100%;
@@ -759,7 +793,7 @@ input[type="text"], input[type="password"] {
   color: #fff;
 }
 #settings-popup {
-  margin-top: 55px;
+     margin-top: 49px;
     position: relative;
     height: 96%;
 }
@@ -782,9 +816,13 @@ input[type="text"], input[type="password"] {
 {
   height: 29.5% !important;
 }
+.ion-height-2
+{
+  height: 30.5% !important;
+}
 .ion-non-height
 {
-  height: 17.6%;
+  height: 44.3%;
 }
 .fromName {
   float: right;

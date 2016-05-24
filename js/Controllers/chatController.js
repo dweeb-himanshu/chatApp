@@ -3,50 +3,57 @@
 angular.module("chatApp")
   .controller('chatCtrl', chatCtrl);
 
-  function chatCtrl($scope, $rootScope, chatService, $ionicLoading,$timeout,$ionicPopup, $http,  $state, $location, $ionicModal, $ionicSideMenuDelegate) {
+  function chatCtrl($scope, $rootScope,chatService,$filter, $ionicLoading,$timeout,$ionicPopup, $http,  $state, $location, $ionicModal, $ionicSideMenuDelegate) {
  
  $scope.current = JSON.parse(localStorage.getItem("userDetails"));
  $scope.recentmesseges = {};
+ $scope.messageLimit = 6;
  $scope.allContacts = {};
+ $scope.currentuserdetail = [];
+ $scope.current = JSON.parse(localStorage.getItem("userDetails"));
+
+  //get today's date
+    // var currentTime = new Date()
+    // var month = currentTime.getMonth() + 1
+    // var day = currentTime.getDate()
+    // var year = currentTime.getFullYear()
+
+    // if(day<10)
+    // {
+    //     day = '0' + day;
+    // }
+    // if(month<10)
+    // {
+    //   month = '0' + month;
+    // }
+    $scope.todayDate = $filter('date')(new Date(), 'dd/MM/yyyy');
+    
+    console.log(typeof($scope.todayDate));
+    console.log($scope.todayDate);
 //init applozic plugin for 
- $applozic.fn.applozic({
-                        userId: $scope.current.user_id,
-                        userName: $scope.current.username, 
-                        imageLink:$scope.current.profile_image,
-                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
-                          ojq: $original,
-                          maxAttachmentSize: 25, 
-                          desktopNotification: true,
-                          locShare: false,
-                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
-                          onInit: function() { 
-                          $applozic.fn.applozic('getMessages',
-                          {
-                            callback : function(data)
-                            {
-                              console.log(data);
-                              $scope.recentmesseges = data.data
-                            }
-                      }); 
-                                 }
-                     });
-                   
-   
+
+
+
+$timeout(function() {
+  $applozic.fn.applozic('getMessages',
+      {
+        callback : function(data)
+        {
+          console.log(data);
+          $scope.recentmesseges = data.data;
+          $scope.currentuserdetail = data.data.userDetails;
+          $scope.currentgroupdetail = data.data.groupFeeds;
+          $scope.$apply();
+        }
+  }); 
+}, 10);
+  $timeout(function() {
+      $scope.messageLimit = 100;
+    }, 2000);
      $scope.isNotificationOn = true;
      $scope.displaySideBar = false;
      $scope.popupClass='button-setting';
     $scope.current = JSON.parse(localStorage.getItem("userDetails"));
-    function getallContacts()
-    {
-        chatService.getallContact($scope.current.user_id, $scope.current.apartment_id)
-            .then(function(response){
-              console.log(response);
-              for(var i in response.data.blocks){ 
-              $scope.allContacts[i] = response.data.blocks[i];
-            };
-            });
-    };
-
     //get current chhat history
     
     $scope.showsearchBar = function ()
@@ -96,11 +103,22 @@ angular.module("chatApp")
   //    */
      $scope.logOut = function()
      {
-        localStorage.removeItem('userDetails');
-        localStorage.removeItem('userData');
-        localStorage.removeItem('groupData');
-        $location.path('/login');
-     }
+      $ionicPopup.confirm({
+             title: 'Confirm Block',
+             template: 'Are you sure you want to Log out ?'
+           }).then(function(res) {
+             if(res) {
+                    localStorage.removeItem('userDetails');
+                    localStorage.removeItem('userData');
+                    localStorage.removeItem('groupData');
+                    $location.path('/login');
+             }
+             else{
+                $scope.displaySideBar = false;
+          $scope.popupClass = 'button-setting';
+             }       
+     });
+   };
 
     function getOtherUserDetail()
     {
@@ -138,6 +156,39 @@ angular.module("chatApp")
               $scope.isNotificationOn = true;
             });
     }
+     /*
+    *Redirects the user to chat screen
+    *@method changePath
+    *@param {object} User/Group Information
+    */
+    $scope.changePath = function (recent)
+    {
+
+        if(recent.groupId == null || recent.groupId == undefined){
+           var userParam = {}
+           userParam.user_id= recent.contactIds;
+           userParam = JSON.stringify(userParam);  
+          $state.go('chatuser',{userDetailParam:userParam},{reload:true});
+
+        }
+        else{
+          console.log(recent)
+            var groupParam = {};
+            groupParam.group_id = recent.groupId; 
+            var itr=0;
+            for(itr in $scope.currentgroupdetail)
+            {
+              if(recent.groupId == $scope.currentgroupdetail[itr].id)
+              {
+                groupParam.block_name = $scope.currentgroupdetail[itr].name;
+                groupParam.admin_id = parseInt($scope.currentgroupdetail[itr].adminName);
+              }
+            }
+            var groupParams = JSON.stringify(groupParam);
+           console.log(groupParams)
+           $state.go('chatuser',{groupDetailParam:groupParams},{reload:true});
+        }
+        $scope.isLoading = false;
+    };
      getOtherUserDetail();
-     getallContacts();
 };

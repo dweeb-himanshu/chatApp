@@ -1,17 +1,16 @@
 "use strict";
 angular.module("chatApp")
   .controller('addcontactCtrl', addcontactCtrl);
-function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatService) {
+function addcontactCtrl($scope,$state, $rootScope,$http, $location, $stateParams, chatService) {
   $scope.users = [];
   var current = [];
   var applozicUsers =[];
-  $scope.block_id = JSON.parse($stateParams.blockIdParam);
+  $scope.blockData = JSON.parse($stateParams.blockDataParam);
+  console.log($scope.blockData);
   $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
   var AuthorizationCode = localStorage.getItem("AuthorizationCode");
   if(!$rootScope.chatContacts){
     current = $rootScope.chatContacts = JSON.parse(localStorage.getItem("groupData"));
-    console.log(current)
-    console.log("getting from local...");
   }
   else{
       //console.log($rootScope.chatContacts);
@@ -19,14 +18,13 @@ function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatS
   }
   if(!$rootScope.userInfo){
     $rootScope.userInfo = JSON.parse(localStorage.getItem("userDetails"));
-    console.log("getting from local...");
   }
   var blocks = [];
   var users = [];
   $scope.userInfo = [];
   //console.log(current.data.blocks.length);
-  for(var i in current.data.blocks){
-    blocks[i] = current.data.blocks[i];
+  for(var i in current.blocks){
+    blocks[i] = current.blocks[i];
     //console.log(current.blocks);
   }
   console.log(blocks[0]);
@@ -60,7 +58,8 @@ function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatS
 
   $scope.BacktoEditGroup = function ()
   {
-      $location.path('/editgroup');
+      var blockDataJson = JSON.stringify($scope.blockData);
+      $state.go('editgroup', {blockDataParam: blockDataJson });
   };
   $scope.SelectUser = function(event, user_id){
     console.log("selecting user...");
@@ -91,27 +90,7 @@ function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatS
 
   };
   $scope.SetGroup = function(){
-    console.log($scope.block_id.group_id);
-    var addUsersGroup = {
-      user_id: $rootScope.userInfo.user_id,
-      apartment_id: $rootScope.userInfo.apartment_id,
-      block_id: $scope.block_id.block_id,
-      users: $scope.users
-    };
-    chatService.postUsersGroup(addUsersGroup)
-      .success(function(response){
-        console.log(response);
-        window.localStorage["groupData"] = angular.toJson(response);
-        appLoziaddmember();
-        
-      })
-      .error(function(err){
-        console.log(err);
-      });               
-  }
-  function appLoziaddmember()
-        {
-          alert($scope.block_id.group_id);
+    var currentUser = JSON.parse(localStorage.getItem("userDetails"));
           $http({
                   url: 'https://apps.applozic.com/rest/ws/group/add/member',
                   method: "GET",
@@ -121,8 +100,8 @@ function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatS
                     "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
                     "Device-Key": $scope.applozicCred.data.deviceKey
                 },
-                  data: { 
-                    'groupId' : $scope.block_id.group_id,
+                params: { 
+                    'groupId' : $scope.blockData.id,
                     'userId' : applozicUsers
                 }
               })
@@ -132,5 +111,5 @@ function addcontactCtrl($scope, $rootScope,$http, $location, $stateParams, chatS
               function(response) { // optional
                       // failed
               });
-        }
+            }
 };

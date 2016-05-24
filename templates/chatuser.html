@@ -1,5 +1,4 @@
 
-<section style="height: 100%;z-index:9999999;background-color: transparent !important;">
 	<ion-header-bar class="bar bar-header">
 	  <button style="margin-top: 2%;width: 60px;" class="button button-icon icon button-back" ng-click="myGoBack()"></button>
 	  <img ng-src="{{paramDetails.profile_image}}" class="chat-user-image" style="margin-top: 1%;">
@@ -12,9 +11,6 @@
 	</ion-header-bar>
 	<ion-content >
 	
-
-	</ion-content>
-
 <div class="float-right" id="settings-popup" ng-show="displaySideBar" style="z-index:999999;">
 		<ion-list style="background: #848484; height: 100%;z-index:999999;">
 			<ion-item class="grey-background ion-non-height" ng-click="toggleSideBar();showUserInfo()" ng-class="{'ion-height': individualChatFlag}">
@@ -23,7 +19,7 @@
 				<span class="settings-text">Contact Info</span> 
 				</div>
 			</ion-item>
-			<ion-item class="grey-background ion-non-height" ng-click="toggleSideBar();GetotherPhonenumber()" ng-class="{'ion-height': individualChatFlag}">
+			<ion-item class="grey-background ion-non-height" ng-show="individualChatFlag" ng-click="toggleSideBar();GetotherPhonenumber()" ng-class="{'ion-height': individualChatFlag}">
 			<div class="setting-no-div">
 				<img class="settings-images" src="images/Settings_Call.png" alt="call" />
 				<span class="settings-text">Call</span>
@@ -41,18 +37,14 @@
 				<span class="settings-text">Block</span>
 				</div>
 			</ion-item>
-			<ion-item class="grey-background ion-non-height" ng-hide="individualChatFlag" ng-click="toggleSideBar();" ng-class="{'ion-height': individualChatFlag}">
+			<!-- <ion-item class="grey-background ion-non-height" ng-hide="individualChatFlag" ng-click="toggleSideBar();" ng-class="{'ion-height': individualChatFlag}">
 			<div class="setting-no-div">
 				<img class="settings-images" src="images/Settings_Tools.png" alt="settings" />
 				<span class="settings-text">Settings</span>
 				</div>
-			</ion-item>
-			<ion-item class="grey-background ion-non-height" ng-hide="individualChatFlag" ng-click="logOut();" ng-class="{'ion-height': individualChatFlag}">
-			<div class="setting-no-div">
-				<img class="settings-images" src="images/Settings_Tools.png" alt="settings" />
-				<span class="settings-text">Log Out</span>
-				</div>
-			</ion-item>
+			</ion-item> -->
 		</ion-list>
 	</div>
-</section>
+
+	</ion-content>
+

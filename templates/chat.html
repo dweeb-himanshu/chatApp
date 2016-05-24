@@ -13,7 +13,6 @@ span > img{
 <span ng-if="isLoading" style="position: absolute; margin-top: 30px; left: 44%; z-index: 1000;">
   <ion-spinner></ion-spinner>
 </span>
-<section style="height:100%" ng-if="!isLoading">
   <ion-header-bar class="bar bar-header">
       <div class="ion-header" style="width: 100%">
           <div class="" ng-hide="isSearchtrue" style="margin-right: 15px;">
@@ -31,20 +30,31 @@ span > img{
   </ion-header-bar>
   <ion-content>
     <ion-list>
-        <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message | filter: search" ng-click="changePath(recent)">
-          <span ng-repeat="user in recentmesseges.userDetails" ng-if="recent.contactIds == user.userId">
+        <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message | filter: search | limitTo:messageLimit" ng-click="changePath(recent)" >
+          <span ng-repeat="user in recentmesseges.userDetails" ng-show="recent.contactIds == user.userId && recent.groupId == null">
             <img ng-src="{{user.imageLink}}">
-            <p class="display-inline h2-font-weight">{{user.displayName}}</p>
-           <!--  <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') == todayDate">{{ recent.createdAt | amDateFormat: 'hh:mm A' }}</span>
-            <span class="time-stamp float-right" ng-if="(recent.createdAt | amDateFormat: 'DD/MM/YYYY') != todayDate">{{ recent.createdAt | amDateFormat: 'DD/MM/YYYY' }}</span> -->
+            <p class="display-inline h2-font-weight">{{user.displayName}}</p>  
+              <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
+            <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' != todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
+            <span class="time-stamp float-right counter" ng-show="user.unreadCount>0">{{user.unreadCount}}</span>  
+            </span>
+            <span ng-repeat="user in recentmesseges.groupFeeds" ng-show="recent.groupId == user.id  && recent.groupId != null">
+            <img ng-src="images/group_icon.png">
+            <p class="display-inline h2-font-weight">{{user.name}}</p>       
+              <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
+            <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' !== todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
+            <span class="time-stamp float-right counter" ng-show="user.unreadCount>0">{{user.unreadCount}}</span> 
             </span>
             </span>
             <p style="padding-top: 5px;">
-                <img ng-if="recent.read" src="images/Blue-tick2.png" class="tick-image-class-2">
-                <span>{{recent.message}}</span>
+                  <span ng-if="recent.read == true && recent.groupId == null" class="tick-image-class-2 read-class"></span>
+                  <span ng-if="recent.read == false && recent.sent == false && recent.delivered == true && recent.groupId == null" class="tick-image-class-2 delivered-class"></span>
+                  <span ng-if="recent.read == false && recent.sent == true && recent.delivered == false && recent.groupId == null" class="tick-image-class-2 sent-class"></span>
+                <span ng-if="recent.fileMeta == null">{{recent.message}}</span>
+                <span ng-if="recent.fileMeta != null">Image</span>
             </p>
             </a>
-      <div ng-if="recentmesseges.messeges == 0" style="position: absolute; margin-top: 30px; left: 32%;">
+      <div ng-if="recent.length <= 0" style="position: absolute; margin-top: 30px; left: 32%;">
       <p>{{NoRecentConversation}}</p>
          <ion-spinner></ion-spinner>
       </div>
@@ -57,25 +67,25 @@ span > img{
   </ion-footer-bar>
   <div class="float-right" id="settings-popup" ng-show="displaySideBar">
   	<ion-list style="background: #848484; height: 100%;">
-  		<ion-item class="grey-background ion-height" ng-click="toggleSideBar();showUserInfo()">
+  		<ion-item class="grey-background ion-height-2" ng-click="toggleSideBar();showUserInfo()">
       <div class="setting-no-div">
           <img class="settings-images" src="images/Main_Contacts.png" alt="contact info" />
   			<span class="settings-text">My Info</span>
         </div>
   		</ion-item>
-  		<ion-item class="grey-background ion-height" ng-show="isNotificationOn" ng-click="toggleSideBar();offNotification()">
+  		<ion-item class="grey-background ion-height-2" ng-show="isNotificationOn" ng-click="toggleSideBar();offNotification()">
       <div class="setting-no-div">
   			<img class="settings-images" ng-src="images/noti_on.png"  alt="settings" style="height: 24px;width: 24px;" />
   			<span class="settings-text">Notification</span>
         </div>
   		</ion-item>
-        <ion-item class="grey-background ion-height" ng-hide="isNotificationOn" ng-click="toggleSideBar();onNotification()">
+        <ion-item class="grey-background ion-height-2" ng-hide="isNotificationOn" ng-click="toggleSideBar();onNotification()">
       <div class="setting-no-div">
         <img class="settings-images" ng-src="images/noti_off.png" style="height: 24px;width: 24px;" alt="settings" />
         <span class="settings-text">Notification</span>
         </div>
       </ion-item>
-      <ion-item class="grey-background ion-height" ng-click="logOut();">
+      <ion-item class="grey-background ion-height-2" ng-click="logOut();">
       <div class="setting-no-div">
         <img class="settings-images" src="images/Settings_Tools.png"  alt="settings" />
         <span class="settings-text">Log Out</span>
@@ -83,4 +93,3 @@ span > img{
       </ion-item>
   	</ion-list>
   </div>
-</section> 

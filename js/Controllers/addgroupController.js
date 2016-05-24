@@ -5,22 +5,35 @@ angular.module("chatApp")
     $scope.isBlockDisabled = true;
     $scope.newGroupName = null;
     $scope.users = [];
+
     /**
      * Retrieving the contacts from localStorage
      * then process them and display at view.
      * {Same thing done at contactController.js}
      */
     var current = {};
-    if(!$rootScope.groupContacts){
-      current = $rootScope.groupContacts = JSON.parse(localStorage.getItem("groupData"));
-      console.log("getting from local...");
-    }
-    else{
-        current = $rootScope.groupContacts;
-    }
-$scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
+    $scope.currentuser = JSON.parse(localStorage.getItem("userDetails"));
+    if(window.localStorage["groupData"] == null)
+    {
+     chatService.getGroupData($scope.currentuser.user_id,$scope.currentuser.apartment_id)
+          .success(function(response){
+              console.log(response);
+              window.localStorage["groupData"] = angular.toJson(response);
+              current = JSON.parse(localStorage.getItem("groupData"));
+               groupuserdetail();
+          })
+          .error(function(err){
+            console.log(err);
+          })
+        }
+        else
+        {
+          current = JSON.parse(localStorage.getItem("groupData"));
+          groupuserdetail();
+        }
+  $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
   var AuthorizationCode = localStorage.getItem("AuthorizationCode");
-  var defaultGroupname  = localStorage.getItem("DefaultGroup");
+   function groupuserdetail(){
     var blocks = [];
     var users = [];
     $scope.userInfo = [];
@@ -61,6 +74,7 @@ $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
         itr++;
       }*/
     }
+  }
     $scope.changePath = function () {
       if ($scope.isBlockDisabled) {
           $scope.isBlockDisabled = false;
@@ -80,8 +94,6 @@ $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
     {
 
         if($scope.newGroupName != null && $scope.newGroupName != ''){
-          if($scope.newGroupName != defaultGroupname)
-          {
           if($scope.users.length != 0){
             console.log("users selected::"+$scope.users);
             var users = [];
@@ -136,11 +148,7 @@ $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
           else{
             alert("Please select group members");
           }
-        }
-        else
-        {
-          alert("Group name can not be same as default");
-        }
+        
         }
         else{
           alert("Please enter group name...");
@@ -176,10 +184,6 @@ $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
         }
         $scope.users.length--;
       }
-      /*Printing users list - for debugging only*/
-      /*for(i in $scope.users){
-        console.log($scope.users[i]);
-      }*/
-    }
+    };
     
 };

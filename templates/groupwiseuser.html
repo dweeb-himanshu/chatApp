@@ -3,9 +3,9 @@
     <div class="ion-header" style="width: 100%">
       <div class="">
         <button class="button button-icon icon button-back" ng-click="BacktoGroup()" style="width: 40px;margin-top: 10px;"></button>
-        <button class="button chat-user-name" style="margin-top: -2.5px !important;">{{blockData.block_name}}</button>
-        <p class="" ng-show="blockData.type == 'personal'" style=" margin-top: -12px;color: white;"><span style="margin-left: 17%">{{AdminInfo.Fname}}</span></p>
-        <button ng-show="isUserOwner && blockData.type == 'personal'" class="button button-icon icon button-edit-group custom-button-group float-right" style="width: 40px;margin-top:-50px;" ng-click="editGroup()">
+        <button class="button chat-user-name" style="margin-top: -2.5px !important;">{{blockData.name}}</button>
+        <p class="" style=" margin-top: -12px;color: white;"><span style="margin-left: 17%">{{AdminInfo.Fname}}</span></p>
+        <button ng-show="isUserOwner" class="button button-icon icon button-edit-group custom-button-group float-right" style="width: 40px;margin-top:-50px;" ng-click="editGroup()">
         </button>
       </div>
     </div>
@@ -15,9 +15,9 @@
       <input ng-model="search" type="text" class="search-area-class-filter edit-search form-control" placeholder="Search...">
     </div>
     <ion-list>
-      <a class="item item-avatar a-class-border" ng-repeat="user in blockData.users | filter:search | orderBy:'username'" ng-click="changePath(user)">
-        <img ng-src="{{user.profile_image}}">
-        <h2 class="display-inline item-center-list">{{user.username}}</h2>
+      <a class="item item-avatar a-class-border" ng-repeat="user in Groupuserdetail | toArray:false | filter:search | orderBy:'user.userName'" ng-click="changePath(user)" ng-if="user.userName != null">
+        <img ng-src="{{user.imageLink}}">
+        <h2 class="display-inline item-center-list">{{user.userName}}</h2>
       </a>
     </ion-list>
   </ion-content>

@@ -11,28 +11,50 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
    */
    $scope.applozicCred =  JSON.parse(localStorage.getItem("applozicDetails"));
   var AuthorizationCode = localStorage.getItem("AuthorizationCode");
-  if($scope.blockData == null || $scope.blockData == ''){
-    console.log("No data in scope");
-    $scope.blockData = $rootScope.blockData;
-  }
-  else{
-    $rootScope.blockData = $scope.blockData;
-  }
+  $scope.UserArray = [];
   $scope.users = [];
-
+ function getGroupUserList()
+  {
+    var itr = 0;
+    for(itr in $scope.blockData.membersName)
+    {
+      $scope.UserArray.push(parseInt($scope.blockData.membersName[itr]));
+    }
+    getUserdetail();
+  }
   $scope.BacktoEditGroup = function ()
   {
       var blockDataJson = JSON.stringify($scope.blockData);
       $state.go('groupwiseuser', {blockDataParam: blockDataJson });
   }
   $scope.addContact = function ()
-  {
-      console.log($scope.blockData);  
-       $scope.blockId={};
-      $scope.blockId.blockId = $scope.blockData.block_id;
-      $scope.blockId.group_id = $scope.blockData.group_id;
-      var blockData = JSON.stringify($scope.blockId);
-      $state.go('addcontact',{blockIdParam:blockData});
+  { 
+      console.log($scope.blockData);
+      var blockDetail = JSON.stringify($scope.blockData);
+      $state.go('addcontact',{blockDataParam:blockDetail},{reload:true});
+  }
+    function getUserdetail(){
+    console.log($scope.UserArray)
+      //get group user detail
+       $http({
+                  url: 'https://apps.applozic.com/rest/ws/user/detail',
+                  method: "GET",
+                  headers: {
+                "Authorization": AuthorizationCode,
+                "UserId-Enabled": true,
+                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Device-Key": $scope.applozicCred.data.deviceKey
+        },
+                  params: { 
+                    'userIds' : $scope.UserArray
+                }
+              })
+              .then(function(response) {
+              $scope.Groupuserdetail  = response.data;
+              }, 
+              function(response) { // optional
+                      // failed
+              });
   }
   $scope.SetGroup = function()
   {
@@ -50,12 +72,6 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
             user_id: $scope.users[itr]
           });
         };
-        var updateGroupData = {
-          user_id: currentUser.user_id,
-          apartment_id: currentUser.apartment_id,
-          block_id: $scope.blockData.block_id,
-          users: users
-        };
         console.log(applozicUsers);
         //create new applozic group
               $http({
@@ -67,26 +83,17 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
                     "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
                     "Device-Key": $scope.applozicCred.data.deviceKey
                 },
-                  data: { 
+                  params: { 
                     'groupId' : $scope.blockData.group_id,
                     'userId' : applozicUsers
                 }
               })
               .then(function(response) {
-              console.log(response);
+              $state.go('group',{},{reload:true});
               }, 
               function(response) { // optional
                       // failed
               });
-        chatService.postUpdateGroup(updateGroupData)
-          .success(function(response){
-              console.log(response);
-              window.localStorage["groupData"] = angular.toJson(response);
-              $location.path('/group');
-          })
-          .error(function(err){
-            console.log(err);
-          })
         }
       else{
         alert("Please select the members to be removed");
@@ -121,4 +128,5 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
       console.log($scope.users[i]);
     }
   };
+  getGroupUserList();
 };

@@ -16,18 +16,18 @@
       </div>
   </ion-header-bar>
   <ion-content>
-      <div class="default-group-class" style="padding-top: 10px;">Default</div>
+     <!--  <div class="default-group-class" style="padding-top: 10px;">Default</div>
       <ion-list>
-          <a class="item item-avatar a-class-border" ng-repeat="defaultBlock in defaultBlocks | orderBy:'block_name'" style="padding-left: 0">
-              <h3 class="display-inline item-center-list h2-font-wieght" style="width:60%;margin-left: 15px; margin-top: 8px;font-weight:700;" ng-click="changePath(defaultBlock)">{{defaultBlock.block_name}}</h3>
-              <button class="button button-icon icon button-expand-group custom-button-group float-right" ng-click="expandGroup(defaultBlock)"></button>
+      <a class="item item-avatar a-class-border"  ng-repeat="defaultBlock in ApplozicGroupdetail.data.response | orderBy:'name'" style="padding-left: 0" ng-show="defaultBlock.indexOf('Current') != -1">
+              <h3 class="display-inline item-center-list h2-font-wieght" style="width:60%; margin-left: 15px; margin-top: 8px;font-weight:700;" ng-click="changePath(defaultBlock)">{{defaultBlock.name}}</h3>
+              <button class="button button-icon icon button-expand-group custom-button-group float-right" ng-click="expandGroup(personalBlock)"></button>
           </a>
-      </ion-list>
+      </ion-list> -->
       <ion-list>
-          <div class="default-group-class" style="height: 27px;">Personal</div>
-          <div class="" ng-if="personalBlocks.length>0">
-          <a class="item item-avatar a-class-border"  ng-repeat="personalBlock in personalBlocks | orderBy:'block_name'" style="padding-left: 0" ng-hide="personalBlocks.length === 0">
-              <h3 class="display-inline item-center-list h2-font-wieght" style="width:60%; margin-left: 15px; margin-top: 8px;font-weight:700;" ng-click="changePath(personalBlock)">{{personalBlock.block_name}}</h3>
+          <div class="default-group-class" style="height: 27px;margin-top: 10px;">Personal</div>
+          <div class="">
+          <a class="item item-avatar a-class-border"  ng-repeat="personalBlock in ApplozicGroupdetail.data.response | orderBy:'name'" style="padding-left: 0">
+              <h3 class="display-inline item-center-list h2-font-wieght" style="width:60%; margin-left: 15px; margin-top: 8px;font-weight:700;" ng-click="changePath(personalBlock)">{{personalBlock.name}}</h3>
               <button class="button button-icon icon button-expand-group custom-button-group float-right" ng-click="expandGroup(personalBlock)"></button>
           </a>
           </div>

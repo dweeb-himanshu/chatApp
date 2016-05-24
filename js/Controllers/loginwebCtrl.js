@@ -1,9 +1,12 @@
 "use strict";
 //this is login controller
 var app = angular.module("chatApp");
-  app.controller('loginwebCtrl',['$http','$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($http,$scope, $window, chatService, $rootScope,$location,$ionicPopup) {
+  app.controller('loginwebCtrl',['$http','$state','$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($http,$state,$scope, $window, chatService, $rootScope,$location,$ionicPopup) {
+    
+
     if(localStorage.getItem("userDetails") == null)
     {
+      $scope.isUserLoggedIn = false;
       $rootScope.Isloggedin=false;
       $scope.username = null;
       $scope.groupmember = {};
@@ -31,6 +34,23 @@ var app = angular.module("chatApp");
             }
             else
             {
+                     if($scope.currentuser == null)
+                        {
+                          console.log(response);
+                           $applozic.fn.applozic({
+                                            userId: response.user_id,
+                                            userName: response.username, 
+                                            imageLink:response.profile_image,
+                                            appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                                              ojq: $original,
+                                              maxAttachmentSize: 25, 
+                                              desktopNotification: false,
+                                              locShare: false,
+                                              googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                                              onInit: function() { 
+                                                     }
+                                         });
+                        }
               window.localStorage["userDetails"] = angular.toJson(response);
               $rootScope.Isloggedin=true;
               /*This flag will ensure that userData API in chatController is called
@@ -53,8 +73,7 @@ var app = angular.module("chatApp");
               })
               .then(function(response) {
               window.localStorage["applozicDetails"] = angular.toJson(response);
-              getDefaultGroup();
-              
+              getAuthCode();
               }, 
               function(response) { // optional
                       // failed
@@ -188,7 +207,6 @@ var app = angular.module("chatApp");
             }
 
         }
-
         return string;
     }
 
@@ -196,55 +214,8 @@ var app = angular.module("chatApp");
   var Code = Base64.encode($scope.applozicCred.config.data.userId+':'+$scope.applozicCred.data.deviceKey);
   $scope.AuthorizationCode = 'Basic '+Code;  
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
-  createGroup();
+  goToChat();
 }
-              var applozicUsers = [];
-              function getDefaultGroup()
-              {
-              chatService.getGroupData($scope.current.user_id, $scope.current.apartment_id)
-              .then(function(response){
-                $scope.groupmember = response;
-                console.log($scope.groupmember.data.blocks);
-                
-                var itr=0;
-                var user=0;
-                      for(itr in $scope.groupmember.data.blocks){
-                        if($scope.groupmember.data.blocks[itr].type === "default"){
-                          $scope.DefaultGroupname = $scope.groupmember.data.blocks[itr].block_name;
-                          for(user in $scope.groupmember.data.blocks[itr].users)
-                          {
-                              applozicUsers.push($scope.groupmember.data.blocks[itr].users[user].user_id);
-                          }
-                        }
-                }
-                getAuthCode();
-              });
-            }
-                //create new applozic group
-                function createGroup()
-                {
-              $http({
-                  url: 'https://apps.applozic.com/rest/ws/group/create',
-                  method: "POST",
-                  headers: {
-                "Authorization": $scope.AuthorizationCode,
-                "UserId-Enabled": true,
-                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
-                "Device-Key": $scope.applozicCred.data.deviceKey
-        },
-                  data: { 
-                    'groupName' : $scope.DefaultGroupname,
-                    'groupMemberList' : applozicUsers
-                }
-              })
-              .then(function(response) {
-              window.localStorage["DefaultGroup"] = response.data.response.name;
-              window.localStorage["DefaultGroupid"] = response.data.response.id;
-              }, 
-              function(response) { // optional
-                      // failed
-              });
-            }
               // function enablePushnotification()
               // {
               //   var userPxy = {
@@ -266,17 +237,41 @@ var app = angular.module("chatApp");
               //         });
               // }
 
-              $rootScope.apiCallFlag = false;
-              $location.path('/chat');
             }
           })
           .error(function(err){
             console.error(err);
           });
       };
+      function goToChat()
+               { 
+              $rootScope.apiCallFlag = false;
+              $location.path('/chat');
+            }
     }
     else {
-            $rootScope.Isloggedin=true;
-            $location.path('/chat');
+      $scope.isUserLoggedIn = true;
+      var currentuser = JSON.parse(localStorage.getItem("userDetails"));
+                   $applozic.fn.applozic({
+                        userId: currentuser.user_id,
+                        userName: currentuser.username, 
+                        imageLink:currentuser.profile_image,
+                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                          ojq: $original,
+                          maxAttachmentSize: 25, 
+                          desktopNotification: false,
+                          locShare: false,
+                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                          onInit: function() { 
+                             
+                           goToChat();
+                                 }
+                     });
+            function goToChat()
+            {
+               console.log('sdf');
+               $rootScope.Isloggedin=true;
+                $state.go('chat', {},{reload:true});
+            }
           }
   }]);

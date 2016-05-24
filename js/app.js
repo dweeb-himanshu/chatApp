@@ -12,7 +12,7 @@ angular.module('chatApp')
             .state('addgroup',{url:'/addgroup',templateUrl:'templates/addgroup.html',cache:false,controller:'addgroupCtrl'})
             .state('groupwiseuser',{url:'/groupwiseuser',params:{ blockDataParam: null},cache:false,templateUrl:'templates/groupwiseuser.html',controller:'groupwiseuserCtrl'})
             .state('editgroup',{url:'/editgroup', params:{blockDataParam: null},cache:false,templateUrl:'templates/editgroup.html',controller:'editgroupCtrl'})
-            .state('addcontact',{url:'/addcontact', params:{blockIdParam: null},cache:false,templateUrl:'templates/addcontact.html',controller:'addcontactCtrl'})
+            .state('addcontact',{url:'/addcontact', params:{blockDataParam: null},cache:false,templateUrl:'templates/addcontact.html',controller:'addcontactCtrl'})
 
      $urlRouterProvider.otherwise('/login');
   });

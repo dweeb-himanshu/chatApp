@@ -1,7 +1,7 @@
 
 <ion-view style="background:#F15A25;">
   <ion-content>
-      <div class="text-align" style="margin-top: 60px;">
+      <div class="text-align" style="margin-top: 60px;" ng-hide="isUserLoggedIn">
           <img src="images/satya.jpg">
           <div class="text-align">
               <div style="margin-top: 10px;">
@@ -15,5 +15,8 @@
               <button type="submit" class="login-custom-class" ng-click="signIn(user)">Login</button>
           </div>
       </div>
+      <div style="text-align:center;margin-top: 200px" ng-show="isUserLoggedIn">
+        <img src="images/chat-icon.png" style="height: 100px;width: 100px;">
+      </div>      
   </ion-content>
 </ion-view>
