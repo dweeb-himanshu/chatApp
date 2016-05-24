@@ -11,21 +11,6 @@ angular.module("chatApp")
  $scope.allContacts = {};
  $scope.currentuserdetail = [];
  $scope.current = JSON.parse(localStorage.getItem("userDetails"));
-
-  //get today's date
-    // var currentTime = new Date()
-    // var month = currentTime.getMonth() + 1
-    // var day = currentTime.getDate()
-    // var year = currentTime.getFullYear()
-
-    // if(day<10)
-    // {
-    //     day = '0' + day;
-    // }
-    // if(month<10)
-    // {
-    //   month = '0' + month;
-    // }
     $scope.todayDate = $filter('date')(new Date(), 'dd/MM/yyyy');
     
     console.log(typeof($scope.todayDate));
@@ -166,6 +151,14 @@ $timeout(function() {
 
         if(recent.groupId == null || recent.groupId == undefined){
            var userParam = {}
+            for(itr in $scope.currentuserdetail)
+            {
+              if(recent.contactIds == $scope.currentuserdetail[itr].userId)
+              {
+                userParam.profile_image = $scope.currentuserdetail[itr].imageLink;
+                userParam.username = $scope.currentuserdetail[itr].displayName;
+              }
+            }
            userParam.user_id= recent.contactIds;
            userParam = JSON.stringify(userParam);  
           $state.go('chatuser',{userDetailParam:userParam},{reload:true});

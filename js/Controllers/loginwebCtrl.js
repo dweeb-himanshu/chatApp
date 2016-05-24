@@ -41,7 +41,7 @@ var app = angular.module("chatApp");
                                             userId: response.user_id,
                                             userName: response.username, 
                                             imageLink:response.profile_image,
-                                            appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                                            appId: '1fedfc0bd75571dd2426318ef00dc2a39',  
                                               ojq: $original,
                                               maxAttachmentSize: 25, 
                                               desktopNotification: false,
@@ -66,7 +66,7 @@ var app = angular.module("chatApp");
                     'userId' : $scope.current.user_id,
                     'displayName':$scope.current.username,
                     'imageLink':$scope.current.username.profile_image,
-                    'applicationId':'31b9e5c457ead58f874571e5ce7eb730',
+                    'applicationId':'1fedfc0bd75571dd2426318ef00dc2a39',
                     'deviceType':1
 
                 }
@@ -216,26 +216,26 @@ var app = angular.module("chatApp");
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
   goToChat();
 }
-              // function enablePushnotification()
-              // {
-              //   var userPxy = {
-              //             'applicationId': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
-              //             'userId': $scope.current.user_id, 
-              //             'registrationId': '31b9e5c457ead58f874571e5ce7eb730',
-              //               'pushNotificationFormat' : '1'
-              //           };
+              function enablePushnotification()
+              {
+                var userPxy = {
+                          'applicationId': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
+                          'userId': $scope.current.user_id, 
+                          'registrationId': '1fedfc0bd75571dd2426318ef00dc2a39',
+                            'pushNotificationFormat' : '1'
+                        };
 
-              //         $.ajax({
-              //           url: "https://apps.applozic.com/rest/ws/register/client",
-              //                 type: 'post',
-              //                 data: JSON.stringify(userPxy),
-              //                 contentType: 'application/json',
-              //                 headers: {'Application-Key': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4'}, 
-              //                     success: function (result) {
-              //                         console.log(result);
-              //                     }
-              //         });
-              // }
+                      $.ajax({
+                        url: "https://apps.applozic.com/rest/ws/register/client",
+                              type: 'post',
+                              data: JSON.stringify(userPxy),
+                              contentType: 'application/json',
+                              headers: {'Application-Key': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4'}, 
+                                  success: function (result) {
+                                      console.log(result);
+                                  }
+                      });
+              }
 
             }
           })
@@ -256,12 +256,12 @@ var app = angular.module("chatApp");
                         userId: currentuser.user_id,
                         userName: currentuser.username, 
                         imageLink:currentuser.profile_image,
-                        appId: '31b9e5c457ead58f874571e5ce7eb730',  
+                        appId: '1fedfc0bd75571dd2426318ef00dc2a39',  
                           ojq: $original,
                           maxAttachmentSize: 25, 
                           desktopNotification: false,
                           locShare: false,
-                          googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                          googleApiKey: "AIzaSyBMK0uA1DYVLWFrtd8l3T-hb5t7vzf_M_M",
                           onInit: function() { 
                              
                            goToChat();

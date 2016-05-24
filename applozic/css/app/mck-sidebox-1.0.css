@@ -1493,7 +1493,9 @@
 .mck-icon-smiley { background-position: -10px -248px; width: 30px; height: 30px; }
 .mck-icon-sun { background-position: -10px -288px; width: 30px; height: 30px; }
 .mck-icon-truck { background-position: -10px -328px; width: 30px; height: 30px; }
-.mck-icon-send { background-position: -10px -368px; width: 25px; height: 25px; }
+.mck-icon-send {     background-position: -1px -365px;
+    width: 45px;
+    height: 40px; }
 .mck-icon-smiley-blue { background-position: -10px -403px; width: 25px; height: 25px; }
 .mck-icon-upload { background-position: -10px -438px; width: 25px; height: 30px; }
 .mck-icon-search { background-position: -10px -478px; width: 24px; height: 24px; vertical-align: middle;}

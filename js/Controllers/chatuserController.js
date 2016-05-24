@@ -116,7 +116,7 @@ $scope.myGoBack = function () {
                   headers: {
                 "Authorization": AuthorizationCode,
                 "UserId-Enabled": true,
-                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Application-Key": "1fedfc0bd75571dd2426318ef00dc2a39",
                 "Device-Key": $scope.applozicCred.data.deviceKey
         },
         params: { 
@@ -156,7 +156,7 @@ $scope.myGoBack = function () {
                   headers: {
                 "Authorization": AuthorizationCode,
                 "UserId-Enabled": true,
-                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Application-Key": "1fedfc0bd75571dd2426318ef00dc2a39",
                 "Device-Key": $scope.applozicCred.data.deviceKey
         },
         params: { 
@@ -213,7 +213,7 @@ $scope.myGoBack = function () {
                   headers: {
                 "Authorization": AuthorizationCode,
                 "UserId-Enabled": true,
-                "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                "Application-Key": "1fedfc0bd75571dd2426318ef00dc2a39",
                 "Device-Key": $scope.applozicCred.data.deviceKey
         },
         params: { 

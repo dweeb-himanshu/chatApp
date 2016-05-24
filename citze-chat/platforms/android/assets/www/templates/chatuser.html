@@ -1,0 +1,50 @@
+
+	<ion-header-bar class="bar bar-header">
+	  <button style="margin-top: 2%;width: 60px;" class="button button-icon icon button-back" ng-click="myGoBack()"></button>
+	  <img ng-src="{{paramDetails.profile_image}}" class="chat-user-image" style="margin-top: 1%;">
+	  <span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-show="individualChatFlag">{{paramDetails.username | cut:true:14:' ...'}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px; "></div>
+                                        <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>
+		<span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-hide="individualChatFlag">{{groupDetails.block_name | cut:true:14:' ...'}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px;></div>
+                                        <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>
+		<button class="button button-icon icon  close-button-setting custom-button-group toggle-class-left"  ng-show="displaySideBar" ng-click="toggleSideBar()" style="margin-right: 20px;width: 40px;"></button>
+		<button style="margin-top: 2%;margin-right: 20px;width: 40px;" class="button button-icon icon custom-button-group button-setting toggle-class-left chat-user-setting" ng-show="!displaySideBar" ng-click="toggleSideBar()"></button>
+	</ion-header-bar>
+	<ion-content >
+	
+<div class="float-right" id="settings-popup-2" ng-show="displaySideBar" style="z-index:999999;">
+		<ion-list style="background: #848484; height: 100%;z-index:999999;">
+			<ion-item class="grey-background ion-non-height" ng-click="toggleSideBar();showUserInfo()" ng-class="{'ion-height': individualChatFlag}">
+			<div class="setting-no-div" ng-class="{'setting-div': individualChatFlag}">
+      	<img class="settings-images" src="images/Main_Contacts.png" alt="contact info"/>
+				<span class="settings-text">Contact Info</span> 
+				</div>
+			</ion-item>
+			<ion-item class="grey-background ion-non-height" ng-show="individualChatFlag" ng-click="toggleSideBar();GetotherPhonenumber()" ng-class="{'ion-height': individualChatFlag}">
+			<div class="setting-no-div">
+				<img class="settings-images" src="images/Settings_Call.png" alt="call" />
+				<span class="settings-text">Call</span>
+				</div>
+			</ion-item>
+			<ion-item class="grey-background ion-non-height" ng-show="UserisBlocked" ng-click="unBlockUser();toggleSideBar();" ng-class="{'ion-height': individualChatFlag}">
+			<div class="setting-no-div">
+				<img class="settings-images" src="images/Settings_Block.png" alt="block" />
+				<span class="settings-text">UnBlock</span>
+				</div>
+			</ion-item>
+			<ion-item class="grey-background ion-non-height" ng-hide="UserisBlocked" ng-click="blockUser();toggleSideBar();" ng-class="{'ion-height': individualChatFlag}" id="">
+			<div class="setting-no-div">
+				<img class="settings-images" id="mck-block-button" src="images/Settings_Block.png" alt="block" />
+				<span class="settings-text">Block</span>
+				</div>
+			</ion-item>
+			<!-- <ion-item class="grey-background ion-non-height" ng-hide="individualChatFlag" ng-click="toggleSideBar();" ng-class="{'ion-height': individualChatFlag}">
+			<div class="setting-no-div">
+				<img class="settings-images" src="images/Settings_Tools.png" alt="settings" />
+				<span class="settings-text">Settings</span>
+				</div>
+			</ion-item> -->
+		</ion-list>
+	</div>
+
+	</ion-content>
+
