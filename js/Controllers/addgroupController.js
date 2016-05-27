@@ -95,6 +95,7 @@ angular.module("chatApp")
 
         if($scope.newGroupName != null && $scope.newGroupName != ''){
           if($scope.users.length != 0){
+            $scope.isSpinnerLoading = true;
             console.log("users selected::"+$scope.users);
             var users = [];
             var applozicUsers = [];
@@ -139,6 +140,7 @@ angular.module("chatApp")
               .success(function(response){
                 console.log(response);
                 window.localStorage["groupData"] = angular.toJson(response);
+                $scope.isSpinnerLoading = false;
                 $location.path('/group');
               })
               .error(function(err){

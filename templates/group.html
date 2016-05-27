@@ -23,8 +23,11 @@
               <button class="button button-icon icon button-expand-group custom-button-group float-right" ng-click="expandGroup(personalBlock)"></button>
           </a>
       </ion-list> -->
+        <div class="home-spinner" ng-hide="isSpinnerLoading">
+  <ion-spinner icon="android"></ion-spinner>
+  </div>
       <ion-list>
-          <div class="default-group-class" style="height: 27px;margin-top: 10px;">Personal</div>
+          <div class="default-group-class" ng-show="isSpinnerLoading" style="height: 27px;margin-top: 10px;">Personal</div>
           <div class="">
           <a class="item item-avatar a-class-border"  ng-repeat="personalBlock in ApplozicGroupdetail.data.response | orderBy:'name'" style="padding-left: 0">
               <h3 class="display-inline item-center-list h2-font-wieght" style="width:60%; margin-left: 15px; margin-top: 8px;font-weight:700;" ng-click="changePath(personalBlock)">{{personalBlock.name | cut:true:14:' ...'}}</h3>

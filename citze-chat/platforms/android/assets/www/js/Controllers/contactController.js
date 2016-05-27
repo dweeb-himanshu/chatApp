@@ -28,6 +28,7 @@ function contactCtrl($scope, $rootScope,$timeout, $location,$http,chatService,$s
               for(var i in response.data.blocks){ 
               $scope.blockdetail[i] = response.data.blocks[i];
             };
+            $scope.isSpinnerLoading = true;
             });
     };
      $scope.changePath = function (user)

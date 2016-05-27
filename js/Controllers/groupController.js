@@ -55,9 +55,9 @@ angular.module("chatApp")
         }
               })
               .then(function(response) {
-                console.log(response);
                 var itr = 0;
               $scope.ApplozicGroupdetail = response;
+              $scope.isSpinnerLoading = true;
               }, 
               function(response) { // optional
                       // failed

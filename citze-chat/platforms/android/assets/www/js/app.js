@@ -1,5 +1,5 @@
 
-angular.module('chatApp',['ionic','ngRoute','ngCordova','ngResource','angular.filter','angular-toArrayFilter']);
+angular.module('chatApp',['ionic','ngRoute','ngResource','angular.filter','angular-toArrayFilter']);
 angular.module('chatApp')
 .config(function($stateProvider,$urlRouterProvider, $ionicConfigProvider){
       $stateProvider
@@ -39,53 +39,3 @@ angular.module('chatApp').filter('cut', function () {
             return value + (tail || ' …');
         };
     });
-angular.module('chatApp').run(function($cordovaPush,$rootScope) {
-
-  var androidConfig = {
-    "senderID": "49466468971",
-  };
-
-  document.addEventListener("deviceready", function(){
-    $cordovaPush.register(androidConfig).then(function(result) {
-      // Success
-    }, function(err) {
-      // Error
-    })
-
-    $rootScope.$on('$cordovaPush:notificationReceived', function(event, notification) {
-      switch(notification.event) {
-        case 'registered':
-          if (notification.regid.length > 0 ) {
-            $rootScope.GCM_REGISTRATION_ID = notification.regid;
-            console.log($rootScope.GCM_REGISTRATION_ID);
-          }
-          break;
-
-        case 'message':
-          // this is the actual push notification. its format depends on the data model from the push server
-          console.log('message = ' + notification.message + ' msgCount = ' + notification.msgcnt);
-          break;
-
-        case 'error':
-          console.log('GCM error = ' + notification.msg);
-          break;
-
-        default:
-          console.log('An unknown GCM event has occurred');
-          break;
-      }
-    });
-
-
-    // // WARNING: dangerous to unregister (results in loss of tokenID)
-    // $cordovaPush.unregister(options).then(function(result) {
-    //   // Success!
-    // }, function(err) {
-    //   // Error
-    // })
-
-  }, false);
-});
-
-
-

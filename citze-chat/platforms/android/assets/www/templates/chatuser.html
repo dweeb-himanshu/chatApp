@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar bar-header">
 	  <button style="margin-top: 2%;width: 60px;" class="button button-icon icon button-back" ng-click="myGoBack()"></button>
 	  <img ng-src="{{paramDetails.profile_image}}" class="chat-user-image" style="margin-top: 1%;">
-	  <span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-show="individualChatFlag">{{paramDetails.username | cut:true:14:' ...'}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px; "></div>
+	  <span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-show="individualChatFlag">{{paramDetails.username | cut:true:12:' ...'}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px; "></div>
                                         <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>
 		<span class="chat-user-name" style="margin-top: 2% !important;width: 70%" ng-hide="individualChatFlag">{{groupDetails.block_name | cut:true:14:' ...'}}  <div id="mck-tab-status" class="mck-tab-status mck-truncate n-vis" style="font-size:11px;margin-top: -5px;></div>
                                         <div class="mck-typing-box mck-truncate n-vis" style="font-size:11px;margin-top: -5px;><span class="name-text"></span><span>typing...</span></div></span>

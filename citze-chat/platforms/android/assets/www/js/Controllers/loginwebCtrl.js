@@ -2,10 +2,10 @@
 //this is login controller
 var app = angular.module("chatApp");
   app.controller('loginwebCtrl',['$http','$state','$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($http,$state,$scope, $window, chatService, $rootScope,$location,$ionicPopup) {
-    
-    console.log($rootScope.GCM_REGISTRATION_ID);
-    if(localStorage.getItem("userDetails") == null)
+   
+       if(localStorage.getItem("userDetails") == null)
     {
+      
       $scope.isUserLoggedIn = false;
       $rootScope.Isloggedin=false;
       $scope.username = null;
@@ -48,6 +48,7 @@ var app = angular.module("chatApp");
                                               locShare: false,
                                               googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
                                               onInit: function() { 
+                                                enablePushnotification();
                                                      }
                                          });
                         }
@@ -65,7 +66,7 @@ var app = angular.module("chatApp");
                   data: { 
                     'userId' : $scope.current.user_id,
                     'displayName':$scope.current.username,
-                    'imageLink':$scope.current.username.profile_image,
+                    'imageLink':$scope.current.profile_image,
                     'applicationId':'1fedfc0bd75571dd2426318ef00dc2a39',
                     'deviceType':1
 
@@ -214,15 +215,17 @@ var app = angular.module("chatApp");
   var Code = Base64.encode($scope.applozicCred.config.data.userId+':'+$scope.applozicCred.data.deviceKey);
   $scope.AuthorizationCode = 'Basic '+Code;  
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
-  goToChat();
+  StopWebnotification();
 }
               function enablePushnotification()
               {
+                $rootScope.GCM_REGISTRATION_ID = localStorage.getItem("GCM_DETAIL");
+                console.log($rootScope.GCM_REGISTRATION_ID);
                 var userPxy = {
-                          'applicationId': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
+                          'applicationId': '1fedfc0bd75571dd2426318ef00dc2a39', 
                           'userId': $scope.current.user_id, 
                           'registrationId': $rootScope.GCM_REGISTRATION_ID,
-                            'pushNotificationFormat' : '1'
+                          'pushNotificationFormat' : '1'
                         };
 
                       $.ajax({
@@ -230,7 +233,7 @@ var app = angular.module("chatApp");
                               type: 'post',
                               data: JSON.stringify(userPxy),
                               contentType: 'application/json',
-                              headers: {'Application-Key': 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4'}, 
+                              headers: {'Application-Key': '1fedfc0bd75571dd2426318ef00dc2a39'}, 
                                   success: function (result) {
                                       console.log(result);
                                   }
@@ -248,10 +251,23 @@ var app = angular.module("chatApp");
               $rootScope.apiCallFlag = false;
               $location.path('/chat');
             }
+             function StopWebnotification()
+         {
+        //       window.applozic.init({
+        //         appId: 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
+        //         userId: $scope.current.user_id, 
+        //         userName: $scope.current.username, 
+        //         desktopNotification: true, 
+        //         notificationIconLink: $scope.current.profile_image, 
+        //         notification: false
+        // });
+              goToChat();
+         }
     }
     else {
       $scope.isUserLoggedIn = true;
       var currentuser = JSON.parse(localStorage.getItem("userDetails"));
+
                    $applozic.fn.applozic({
                         userId: currentuser.user_id,
                         userName: currentuser.username, 

@@ -25,18 +25,20 @@
     line-height: 20px;
     color: #333;
 }.mck-sidebox {
-    position: fixed !important;
+    position: relative !important;
     height: 100% !important;
     right: 0 !important;
     left: auto !important;
     margin: 0 !important;
+    margin-top: 55px !important;
     border: 0 !important;
     padding-left: 0px !important;
-    z-index:  2243500 !important;
+    z-index: 2243500 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     line-height: 18px;
     min-width: 310px;
+}
 }.mck-sidebox .mck-row {
     margin-right: -15px;
     margin-left: -15px;
@@ -147,8 +149,6 @@
     outline: none !important;
 }.mck-form-group {
     margin-bottom: 10px;
-}.mck-form-group.last-child {
-    margin-bottom: 0px;
 }.mck-sidebox button, .mck-sidebox input, .mck-sidebox optgroup, .mck-sidebox select, .mck-sidebox textarea {
     margin: 0;
     font: inherit;
@@ -680,7 +680,7 @@
 }.mck-box-ft {
     text-align: left;
     border-top: 1px solid #e5e5e5;
-    padding: 10px 5px;
+    padding: 20px 5px;
 }.mck-box-ft .blk-lg-6 {
     padding: 0px !important;
 }.mck-box-ft-lt {
@@ -823,7 +823,7 @@
     height: 18px;
     vertical-align: middle;
 }.mck-cont-msg-wrapper p {
-    margin: 0px !important;  
+  margin: 0px !important;  
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1493,9 +1493,7 @@
 .mck-icon-smiley { background-position: -10px -248px; width: 30px; height: 30px; }
 .mck-icon-sun { background-position: -10px -288px; width: 30px; height: 30px; }
 .mck-icon-truck { background-position: -10px -328px; width: 30px; height: 30px; }
-.mck-icon-send {        background-position: -6px -365px;
-    width: 36px;
-    height: 36px;}
+.mck-icon-send { background-position: -10px -368px; width: 25px; height: 25px; }
 .mck-icon-smiley-blue { background-position: -10px -403px; width: 25px; height: 25px; }
 .mck-icon-upload { background-position: -10px -438px; width: 25px; height: 30px; }
 .mck-icon-search { background-position: -10px -478px; width: 24px; height: 24px; vertical-align: middle;}

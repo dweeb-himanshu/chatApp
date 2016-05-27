@@ -31,6 +31,9 @@
       </div>
   </ion-header-bar>
 <ion-content scroll="true">
+  <div class="home-spinner" ng-hide="isSpinnerLoading">
+  <ion-spinner icon="android"></ion-spinner>
+  </div>
     <ion-list>
    <span ng-repeat="block in blockdetail"
       ng-if="block.type === 'default' && block.block_name === blockName && blockName !== 'All'">

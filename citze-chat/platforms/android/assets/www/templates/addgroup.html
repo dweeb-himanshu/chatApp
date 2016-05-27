@@ -4,7 +4,8 @@
       <div style="margin-top: 2%;">
         <button class="button button-icon icon button-back" ng-click="BacktoGroup()" style="width: 40px;"></button>
         <input type="text" ng-model="newGroupName" class="search-area-class js-filter  form-control" style="width: 70% !important;" placeholder="Type new group name">
-        <button class="button button-icon icon button-create create-group-tick" ng-click="createGroup()" style="width: 40px;"></button>
+        <button class="button button-icon icon button-create create-group-tick" ng-click="createGroup()" style="width: 40px;" ng-hide="isSpinnerLoading"></button>
+        <ion-spinner icon="android" class="spinner-left" ng-show="isSpinnerLoading"></ion-spinner>
       </div>
     </div>
   </ion-header-bar>

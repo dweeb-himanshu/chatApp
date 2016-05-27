@@ -60,6 +60,7 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
   {
     console.log($scope.blockData);
       if($scope.users.length>0){
+        $scope.isSpinnerLoading = true;
         /*Getting info of current user*/
         var currentUser = JSON.parse(localStorage.getItem("userDetails"));
         var users = [];
@@ -80,7 +81,7 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
                   headers: {
                     "Authorization": AuthorizationCode,
                     "UserId-Enabled": true,
-                    "Application-Key": "31b9e5c457ead58f874571e5ce7eb730",
+                    "Application-Key": "1fedfc0bd75571dd2426318ef00dc2a39",
                     "Device-Key": $scope.applozicCred.data.deviceKey
                 },
                   params: { 
@@ -89,6 +90,7 @@ function editgroupCtrl($http,$scope, $rootScope, $location, $window, $stateParam
                 }
               })
               .then(function(response) {
+                $scope.isSpinnerLoading = false;
               $state.go('group',{},{reload:true});
               }, 
               function(response) { // optional

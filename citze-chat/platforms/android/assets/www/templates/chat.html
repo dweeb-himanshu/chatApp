@@ -10,9 +10,7 @@ span > img{
   border-radius: 50%;
 }
 </style>
-<span ng-if="isLoading" style="position: absolute; margin-top: 30px; left: 44%; z-index: 1000;">
-  <ion-spinner></ion-spinner>
-</span>
+
   <ion-header-bar class="bar bar-header">
       <div class="ion-header" style="width: 100%">
           <div class="" ng-hide="isSearchtrue" style="margin-right: 15px;">
@@ -29,6 +27,9 @@ span > img{
       </div>
   </ion-header-bar>
   <ion-content>
+  <div class="home-spinner" ng-hide="isSpinnerLoading">
+  <ion-spinner icon="android"></ion-spinner>
+  </div>
     <ion-list>
         <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message | filter: search | limitTo:messageLimit" ng-click="changePath(recent)" >
           <span ng-repeat="user in recentmesseges.userDetails" ng-show="recent.contactIds == user.userId && recent.groupId == null">

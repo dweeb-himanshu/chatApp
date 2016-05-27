@@ -3,7 +3,7 @@
 angular.module("chatApp")
   .controller('chatCtrl', chatCtrl);
 
-  function chatCtrl($scope, $rootScope,chatService,$filter, $ionicLoading,$timeout,$ionicPopup, $http,  $state, $location, $ionicModal, $ionicSideMenuDelegate) {
+  function chatCtrl($scope, $rootScope,chatService,$filter,$interval, $ionicLoading,$timeout,$ionicPopup, $http,  $state, $location, $ionicModal, $ionicSideMenuDelegate) {
  
  $scope.current = JSON.parse(localStorage.getItem("userDetails"));
  $scope.recentmesseges = {};
@@ -15,11 +15,12 @@ angular.module("chatApp")
     
     console.log(typeof($scope.todayDate));
     console.log($scope.todayDate);
+    $applozic(".mck-close-sidebox").trigger('click');
 //init applozic plugin for 
 
+//$applozic.fn.applozic('loadTab', '');
 
-
-$timeout(function() {
+function getrecentChat(){
   $applozic.fn.applozic('getMessages',
       {
         callback : function(data)
@@ -28,10 +29,16 @@ $timeout(function() {
           $scope.recentmesseges = data.data;
           $scope.currentuserdetail = data.data.userDetails;
           $scope.currentgroupdetail = data.data.groupFeeds;
+          $scope.isSpinnerLoading = true;
           $scope.$apply();
         }
   }); 
-}, 10);
+
+}
+$interval(function(){
+      getrecentChat();
+   }, 2200);  
+
   $timeout(function() {
       $scope.messageLimit = 100;
     }, 2000);
@@ -184,4 +191,5 @@ $timeout(function() {
         $scope.isLoading = false;
     };
      getOtherUserDetail();
+     getrecentChat();
 };

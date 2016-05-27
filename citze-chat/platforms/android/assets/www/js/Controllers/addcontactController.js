@@ -90,6 +90,8 @@ function addcontactCtrl($scope,$state, $rootScope,$http, $location, $stateParams
 
   };
   $scope.SetGroup = function(){
+    if(applozicUsers.length>0){
+    $scope.isSpinnerLoading  = true;
     var currentUser = JSON.parse(localStorage.getItem("userDetails"));
           $http({
                   url: 'https://apps.applozic.com/rest/ws/group/add/member',
@@ -106,10 +108,16 @@ function addcontactCtrl($scope,$state, $rootScope,$http, $location, $stateParams
                 }
               })
               .then(function(response) {
+                $scope.isSpinnerLoading  = true;
               $location.path('/group');
               }, 
               function(response) { // optional
                       // failed
               });
+            }
+            else
+            {
+              alert('please select atleat one member');
+            }
             }
 };

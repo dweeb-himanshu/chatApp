@@ -1,8 +1,9 @@
-"use strict";
+
 //this is login controller
 var app = angular.module("chatApp");
   app.controller('loginwebCtrl',['$http','$state','$scope', '$window','chatService','$rootScope', '$location', '$ionicPopup',function($http,$state,$scope, $window, chatService, $rootScope,$location,$ionicPopup) {
     
+
 
     if(localStorage.getItem("userDetails") == null)
     {
@@ -215,6 +216,8 @@ var app = angular.module("chatApp");
   $scope.AuthorizationCode = 'Basic '+Code;  
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
   goToChat();
+  StopWebnotification();
+
 }
               function enablePushnotification()
               {
@@ -248,6 +251,17 @@ var app = angular.module("chatApp");
               $rootScope.apiCallFlag = false;
               $location.path('/chat');
             }
+         function StopWebnotification()
+         {
+              window.applozic.init({
+                appId: 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
+                userId: $scope.current.user_id, 
+                userName: $scope.current.username, 
+                desktopNotification: true, 
+                notificationIconLink: currentuser.profile_image, 
+                notification: false
+        });
+         }   
     }
     else {
       $scope.isUserLoggedIn = true;
