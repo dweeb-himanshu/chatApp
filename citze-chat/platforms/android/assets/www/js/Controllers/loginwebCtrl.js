@@ -5,7 +5,6 @@ var app = angular.module("chatApp");
    
        if(localStorage.getItem("userDetails") == null)
     {
-      
       $scope.isUserLoggedIn = false;
       $rootScope.Isloggedin=false;
       $scope.username = null;
@@ -43,11 +42,20 @@ var app = angular.module("chatApp");
                                             imageLink:response.profile_image,
                                             appId: '1fedfc0bd75571dd2426318ef00dc2a39',  
                                               ojq: $original,
-                                              maxAttachmentSize: 25, 
+                                              maxAttachmentSize: 25,
+                                              notification:false, 
                                               desktopNotification: false,
                                               locShare: false,
-                                              googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
+                                              googleApiKey: "AIzaSyBMK0uA1DYVLWFrtd8l3T-hb5t7vzf_M_M",
                                               onInit: function() { 
+                                                 $applozic.fn.applozic('subscribeToEvents',  {
+                                                  onMessageReceived : function(data)
+                                                    {
+                                                      console.log(data);
+                                                      $rootScope.getrecentChat();
+                                                    } 
+
+                                                });
                                                 enablePushnotification();
                                                      }
                                          });
@@ -215,7 +223,7 @@ var app = angular.module("chatApp");
   var Code = Base64.encode($scope.applozicCred.config.data.userId+':'+$scope.applozicCred.data.deviceKey);
   $scope.AuthorizationCode = 'Basic '+Code;  
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
-  StopWebnotification();
+  goToChat();
 }
               function enablePushnotification()
               {
@@ -225,7 +233,8 @@ var app = angular.module("chatApp");
                           'applicationId': '1fedfc0bd75571dd2426318ef00dc2a39', 
                           'userId': $scope.current.user_id, 
                           'registrationId': $rootScope.GCM_REGISTRATION_ID,
-                          'pushNotificationFormat' : '1'
+                          'pushNotificationFormat' : '1',
+                          'appVersionCode': '106'
                         };
 
                       $.ajax({
@@ -235,7 +244,7 @@ var app = angular.module("chatApp");
                               contentType: 'application/json',
                               headers: {'Application-Key': '1fedfc0bd75571dd2426318ef00dc2a39'}, 
                                   success: function (result) {
-                                      console.log(result);
+                                    console.log(result);
                                   }
                       });
               }
@@ -251,18 +260,6 @@ var app = angular.module("chatApp");
               $rootScope.apiCallFlag = false;
               $location.path('/chat');
             }
-             function StopWebnotification()
-         {
-        //       window.applozic.init({
-        //         appId: 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
-        //         userId: $scope.current.user_id, 
-        //         userName: $scope.current.username, 
-        //         desktopNotification: true, 
-        //         notificationIconLink: $scope.current.profile_image, 
-        //         notification: false
-        // });
-              goToChat();
-         }
     }
     else {
       $scope.isUserLoggedIn = true;
@@ -275,11 +272,20 @@ var app = angular.module("chatApp");
                         appId: '1fedfc0bd75571dd2426318ef00dc2a39',  
                           ojq: $original,
                           maxAttachmentSize: 25, 
+                          notification:false, 
                           desktopNotification: false,
                           locShare: false,
                           googleApiKey: "AIzaSyBMK0uA1DYVLWFrtd8l3T-hb5t7vzf_M_M",
                           onInit: function() { 
-                             
+                                    $applozic.fn.applozic('subscribeToEvents',  {
+                                                  onMessageReceived : function(data)
+                                                    {
+                                                      console.log(data);
+                                                      $rootScope.getrecentChat();
+                                                    } 
+
+                                                });
+                                    
                            goToChat();
                                  }
                      });

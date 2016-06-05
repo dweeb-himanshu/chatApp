@@ -20,12 +20,11 @@ angular.module("chatApp")
 
 //$applozic.fn.applozic('loadTab', '');
 
-function getrecentChat(){
+$rootScope.getrecentChat =  function(){
   $applozic.fn.applozic('getMessages',
       {
         callback : function(data)
         {
-          console.log(data);
           $scope.recentmesseges = data.data;
           $scope.currentuserdetail = data.data.userDetails;
           $scope.currentgroupdetail = data.data.groupFeeds;
@@ -33,11 +32,7 @@ function getrecentChat(){
           $scope.$apply();
         }
   }); 
-
 }
-$interval(function(){
-      getrecentChat();
-   }, 2200);  
 
   $timeout(function() {
       $scope.messageLimit = 100;
@@ -190,6 +185,16 @@ $interval(function(){
         }
         $scope.isLoading = false;
     };
+      function getallContacts()
+    {
+        chatService.getallContact($scope.current.user_id, $scope.current.apartment_id)
+            .then(function(response){
+              console.log(response);
+              window.localStorage["groupData"] = angular.toJson(response.data);
+            
+            });
+    };
+      getallContacts();
      getOtherUserDetail();
-     getrecentChat();
+     $rootScope.getrecentChat();
 };

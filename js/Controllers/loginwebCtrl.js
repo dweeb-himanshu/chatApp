@@ -47,8 +47,18 @@ var app = angular.module("chatApp");
                                               maxAttachmentSize: 25, 
                                               desktopNotification: false,
                                               locShare: false,
+                                              notification: false,
                                               googleApiKey: "AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4",
                                               onInit: function() { 
+                                                $applozic.fn.applozic('subscribeToEvents',  {
+                                                  onMessageReceived : function(data)
+                                                    {
+                                                      console.log(data);
+                                                      $rootScope.getrecentChat();
+                                                    } 
+
+                                                });
+
                                                      }
                                          });
                         }
@@ -216,7 +226,6 @@ var app = angular.module("chatApp");
   $scope.AuthorizationCode = 'Basic '+Code;  
   window.localStorage["AuthorizationCode"] = $scope.AuthorizationCode;
   goToChat();
-  StopWebnotification();
 
 }
               function enablePushnotification()
@@ -253,14 +262,7 @@ var app = angular.module("chatApp");
             }
          function StopWebnotification()
          {
-              window.applozic.init({
-                appId: 'AIzaSyDKfWHzu9X7Z2hByeW4RRFJrD9SizOzZt4', 
-                userId: $scope.current.user_id, 
-                userName: $scope.current.username, 
-                desktopNotification: true, 
-                notificationIconLink: currentuser.profile_image, 
-                notification: false
-        });
+              
          }   
     }
     else {
@@ -275,11 +277,21 @@ var app = angular.module("chatApp");
                           maxAttachmentSize: 25, 
                           desktopNotification: false,
                           locShare: false,
+                          notification: false,
                           googleApiKey: "AIzaSyBMK0uA1DYVLWFrtd8l3T-hb5t7vzf_M_M",
                           onInit: function() { 
-                             
-                           goToChat();
+                             $applozic.fn.applozic('subscribeToEvents',  {
+                                                  onMessageReceived : function(data)
+                                                    {
+                                                      console.log(data);
+                                                      $rootScope.getrecentChat();
+                                                      
+                                                    } 
+
+                                                }); 
+                             goToChat();
                                  }
+
                      });
             function goToChat()
             {

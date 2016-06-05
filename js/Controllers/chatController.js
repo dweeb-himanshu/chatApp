@@ -19,12 +19,11 @@ angular.module("chatApp")
 
 //$applozic.fn.applozic('loadTab', '');
 
-function getrecentChat(){
+$rootScope.getrecentChat =  function(){
   $applozic.fn.applozic('getMessages',
       {
         callback : function(data)
         {
-          console.log(data);
           $scope.recentmesseges = data.data;
           $scope.currentuserdetail = data.data.userDetails;
           $scope.currentgroupdetail = data.data.groupFeeds;
@@ -33,9 +32,13 @@ function getrecentChat(){
         }
   }); 
 }
-$interval(function(){
-      getrecentChat();
-   }, 2800);  
+
+          // onMessageReceived: function (obj) {
+          //              console.log('onMessageReceived: ' + obj);
+          //         }
+// $interval(function(){
+//       getrecentChat();
+//    }, 15000);  
 
   $timeout(function() {
       $scope.messageLimit = 100;
@@ -94,13 +97,15 @@ $interval(function(){
      $scope.logOut = function()
      {
       $ionicPopup.confirm({
-             title: 'Confirm Block',
+             title: 'Confirm Log out',
              template: 'Are you sure you want to Log out ?'
            }).then(function(res) {
              if(res) {
                     localStorage.removeItem('userDetails');
                     localStorage.removeItem('userData');
                     localStorage.removeItem('groupData');
+                    localStorage.removeItem('AuthorizationCode');
+                    localStorage.removeItem('applozicDetails');
                     $location.path('/login');
              }
              else{
@@ -188,6 +193,16 @@ $interval(function(){
         }
         $scope.isLoading = false;
     };
+      function getallContacts()
+    {
+        chatService.getallContact($scope.current.user_id, $scope.current.apartment_id)
+            .then(function(response){
+              console.log(response);
+              window.localStorage["groupData"] = angular.toJson(response.data);
+            
+            });
+    };
+      getallContacts();
      getOtherUserDetail();
-     getrecentChat();
+     $rootScope.getrecentChat();
 };

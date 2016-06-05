@@ -37,14 +37,14 @@ span > img{
             <p class="display-inline h2-font-weight">{{user.displayName | cut:true:14:' ...'}}</p>  
               <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
             <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' != todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
-            <span class="time-stamp float-right counter" ng-show="user.unreadCount>0">{{user.unreadCount}}</span>  
+            <span class="time-stamp float-right counter badge" ng-show="user.unreadCount>0" style="margin-top: 25px;font-size: 15px;">{{user.unreadCount}}</span>  
             </span>
             <span ng-repeat="user in recentmesseges.groupFeeds" ng-show="recent.groupId == user.id  && recent.groupId != null">
             <img ng-src="images/group_icon.png">
             <p class="display-inline h2-font-weight">{{user.name | cut:true:14:' ...'}}</p>       
               <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
             <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' !== todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
-            <span class="time-stamp float-right counter" ng-show="user.unreadCount>0">{{user.unreadCount}}</span> 
+            <span class="time-stamp float-right counter badge" ng-show="user.unreadCount>0" style="margin-top: 25px;font-size: 15px;">{{user.unreadCount}}</span> 
             </span>
             </span>
             <p style="padding-top: 5px;">

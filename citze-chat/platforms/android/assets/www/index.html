@@ -19,7 +19,7 @@
 document.addEventListener("deviceready",onDeviceReady,false);
 function onDeviceReady(){
 console.log("Device Ready")
-var push = PushNotification.init({ "android": {"senderID": "721393051486"},
+var push = PushNotification.init({ "android": {"senderID": "49466468971"},
 "ios": {"alert": "true", "badge": "true", "sound": "true"}, "windows": {} } );
 
 push.on('registration', function(data) {
@@ -29,7 +29,6 @@ window.localStorage["GCM_DETAIL"] = data.registrationId;
 
 push.on('notification', function(data) {
 console.log(data.message);
-alert(data.title+" Message: " +data.message);
 // data.title,
 // data.count,
 // data.sound,
