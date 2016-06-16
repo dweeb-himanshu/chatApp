@@ -35,7 +35,7 @@ function groupwiseuserCtrl($scope,$http, $rootScope, $location, $state, $statePa
     getUserdetail();
   }
   function getUserdetail(){
-    console.log($scope.UserArray)
+    console.log($scope.applozicCred.data.deviceKey)
       //get group user detail
        $http({
                   url: 'https://apps.applozic.com/rest/ws/user/detail',
@@ -43,6 +43,7 @@ function groupwiseuserCtrl($scope,$http, $rootScope, $location, $state, $statePa
                   headers: {
                 "Authorization": AuthorizationCode,
                 "UserId-Enabled": true,
+                "Content-Type": "application/json; charset=utf-8",
                 "Application-Key": "1fedfc0bd75571dd2426318ef00dc2a39",
                 "Device-Key": $scope.applozicCred.data.deviceKey
         },

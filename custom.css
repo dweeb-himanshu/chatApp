@@ -405,7 +405,6 @@ input[type="text"], input[type="password"] {
 {
     height: 93%;
     border-radius: 50%;
-    margin-left: 5%;
 }
 
 .button-expand-group
@@ -438,7 +437,6 @@ input[type="text"], input[type="password"] {
 {
     height: 93%;
     border-radius: 50%;
-    margin-left: 5%;
     max-height: 40px;
     max-width: 40px;
 }

@@ -34,14 +34,14 @@ span > img{
         <a class="item item-avatar a-class-border" ng-repeat="recent in recentmesseges.message | filter: search | limitTo:messageLimit" ng-click="changePath(recent)" >
           <span ng-repeat="user in recentmesseges.userDetails" ng-show="recent.contactIds == user.userId && recent.groupId == null">
             <img ng-src="{{user.imageLink}}">
-            <p class="display-inline h2-font-weight">{{user.displayName | cut:true:14:' ...'}}</p>  
+            <p class="display-inline h2-font-weight">{{user.displayName | cut:true:19:' ...'}}</p>  
               <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
             <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' != todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
             <span class="time-stamp float-right counter badge" ng-show="user.unreadCount>0" style="margin-top: 25px;font-size: 15px;">{{user.unreadCount}}</span>  
             </span>
             <span ng-repeat="user in recentmesseges.groupFeeds" ng-show="recent.groupId == user.id  && recent.groupId != null">
             <img ng-src="images/group_icon.png">
-            <p class="display-inline h2-font-weight">{{user.name | cut:true:14:' ...'}}</p>       
+            <p class="display-inline h2-font-weight">{{user.name | cut:true:19:' ...'}}</p>       
               <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' == todayDate">{{recent.createdAtTime | date: 'h:mma'}}</span> 
             <span class="time-stamp float-right" ng-show="recent.createdAtTime | date: 'dd/MM/yyyy' !== todayDate">{{recent.createdAtTime | date: 'dd/MM/yyyy'}}</span>
             <span class="time-stamp float-right counter badge" ng-show="user.unreadCount>0" style="margin-top: 25px;font-size: 15px;">{{user.unreadCount}}</span> 

@@ -277,6 +277,7 @@ var app = angular.module("chatApp");
                           locShare: false,
                           googleApiKey: "AIzaSyBMK0uA1DYVLWFrtd8l3T-hb5t7vzf_M_M",
                           onInit: function() { 
+                            console.log('oninit called');
                                     $applozic.fn.applozic('subscribeToEvents',  {
                                                   onMessageReceived : function(data)
                                                     {

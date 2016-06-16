@@ -94,12 +94,12 @@ $scope.myGoBack = function () {
     {
         if($scope.individualChatFlag)
           {
-
-              $ionicPopup.alert({
-                  title: $rootScope.OtherUserInfo.data.PhoneNo,
-                  content: ''
-                }).then(function(res) {
-                });
+              window.open('tel:'+$rootScope.OtherUserInfo.data.PhoneNo+'');
+              // $ionicPopup.alert({
+              //     title: $rootScope.OtherUserInfo.data.PhoneNo,
+              //     content: ''
+              //   }).then(function(res) {
+              //   });
         }
     }
     $scope.blockUser = function(){

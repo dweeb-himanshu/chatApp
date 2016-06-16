@@ -27,7 +27,7 @@ function addcontactCtrl($scope,$state, $rootScope,$http, $location, $stateParams
     blocks[i] = current.blocks[i];
     //console.log(current.blocks);
   }
-  console.log(blocks[0]);
+  var itr = 0;
   for(var j in blocks){
     //console.log(blocks[j]);
     //console.log(blocks[j].users);
@@ -36,20 +36,11 @@ function addcontactCtrl($scope,$state, $rootScope,$http, $location, $stateParams
       //console.log(blocks[j].users[k]);
       if(blocks[j].type==="default"){
           users[k] = blocks[j].users[k];
+          $scope.userInfo[itr] = users[k];
+    itr++;
           //console.log(k+" "+users[k]);
       }
     }
-  }
-  var itr = 0;
-  $scope.userInfo[0] = users[0];
-  for(var k in users){
-    //console.log("Users Length::"+users.length);
-    $scope.userInfo[itr] = users[k];
-    itr++;
-    /*for(var l=0; l<users.length; l++){
-      $scope.userInfo[itr] = users[k];
-      itr++;
-    }*/
   }
   /*Printing the userInfo*/
   /*for(var itr in $scope.userInfo){

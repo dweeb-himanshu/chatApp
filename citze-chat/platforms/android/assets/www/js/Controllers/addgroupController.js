@@ -50,29 +50,24 @@ angular.module("chatApp")
         //console.log(current.blocks);
       }
     }
-    console.log(blocks[0]);
+     var itr = 0;
     for(var j in blocks){
-      //console.log(blocks[j]);
-      //console.log(blocks[j].users);
-      //console.log(blocks[j].users.length);
+
       for(var k=0; k<blocks[j].users.length; k++){
         //console.log(blocks[j].users[k]);
         if(blocks[j].type==="default"){
             users[k] = blocks[j].users[k];
+            $scope.userInfo[itr] = users[k];
+            itr++;
             //console.log(k+" "+users[k]);
         }
       }
     }
-    var itr = 0;
-    $scope.userInfo[0] = users[0];
+   // $scope.userInfo[0] = users[0];
+   console.log(users);
     for(var k in users){
       //console.log("Users Length::"+users.length);
-      $scope.userInfo[itr] = users[k];
-      itr++;
-      /*for(var l=0; l<users.length; l++){
-        $scope.userInfo[itr] = users[k];
-        itr++;
-      }*/
+      
     }
   }
     $scope.changePath = function () {

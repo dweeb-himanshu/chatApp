@@ -91,7 +91,7 @@ $rootScope.getrecentChat =  function(){
      $scope.logOut = function()
      {
       $ionicPopup.confirm({
-             title: 'Confirm Block',
+             title: 'Confirm Logout',
              template: 'Are you sure you want to Log out ?'
            }).then(function(res) {
              if(res) {
